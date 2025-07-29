@@ -1,0 +1,138 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 var(--spacing-unit);
+}
+
+.formCard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px; /* Rounded corners */
+  padding: calc(var(--spacing-unit) * 5);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 4);
+}
+.header h2 { 
+  font-size: 2rem; 
+  font-weight: 700; 
+  margin-bottom: var(--spacing-unit); 
+  color: var(--text-primary);
+}
+.header p { 
+  color: var(--text-secondary); 
+  font-size: 1rem; 
+}
+
+/* --- Responsive Grid Layout --- */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns on desktop */
+  gap: calc(var(--spacing-unit) * 3);
+}
+
+.formGroup { 
+  display: flex; 
+  flex-direction: column; 
+}
+.fullWidth { 
+  grid-column: 1 / -1; 
+}
+.formGroup label { 
+  margin-bottom: var(--spacing-unit); 
+  font-weight: 500; 
+  color: var(--text-secondary);
+}
+
+/* --- Input & Select Fields (FIXED FOR DARK MODE) --- */
+.formGroup input, 
+.formGroup select {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.5);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  transition: all 0.2s ease;
+  /* THIS IS THE FIX: Explicitly sets text color using CSS variables */
+  color: var(--text-primary); 
+}
+
+/* --- Hover & Focus States --- */
+.formGroup input:hover, 
+.formGroup select:hover {
+    border-color: var(--text-secondary);
+}
+.formGroup input:focus, 
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* --- Goal Toggle Buttons --- */
+.goalOptions {
+  display: flex;
+  background-color: var(--bg-primary);
+  border-radius: 12px;
+  padding: 4px;
+  border: 1px solid var(--border-color);
+}
+.goalOptions button {
+  flex: 1;
+  padding: calc(var(--spacing-unit) * 1.25);
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+.goalOptions button.active {
+  background-color: var(--accent-primary);
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.goalOptions button:not(.active):hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+
+/* --- Save Button --- */
+.buttonGroup {
+  margin-top: calc(var(--spacing-unit) * 4);
+  padding-top: calc(var(--spacing-unit) * 3);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+.submitButton {
+  background-color: var(--accent-primary);
+  color: #fff;
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.submitButton:hover {
+  background-color: var(--accent-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* --- Mobile Responsive Behavior --- */
+@media (max-width: 768px) {
+  .formGrid { 
+    grid-template-columns: 1fr; /* Stack to one column */
+  }
+}

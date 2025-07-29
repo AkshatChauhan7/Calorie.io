@@ -5,56 +5,59 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import AddIntake from './pages/AddIntake';
 import History from './pages/History';
-import { calculateTodaysCalories } from './utils/helpers';
+import Profile from './pages/Profile'; // Import the new Profile page
+import { calculateTodaysCalories, calculateCalorieGoal } from './utils/helpers';
 import styles from './App.module.css';
 
 const App = () => {
+  // --- Intake List State ---
   const [intakeList, setIntakeList] = useState(() => {
-    try {
-      const localData = localStorage.getItem('intakeList');
-      return localData ? JSON.parse(localData) : [];
-    } catch (error) {
-      console.error("Error parsing intake list from localStorage", error);
-      return [];
-    }
+    const localData = localStorage.getItem('intakeList');
+    return localData ? JSON.parse(localData) : [];
   });
+
+  // --- User Profile State ---
+  const [userProfile, setUserProfile] = useState(() => {
+    const localProfile = localStorage.getItem('userProfile');
+    return localProfile ? JSON.parse(localProfile) : {
+      age: '', gender: 'female', weight: '', height: '', activityLevel: 'sedentary', goal: 'maintain'
+    };
+  });
+  
+  // --- Calorie Goal State (now dynamic) ---
+  const [calorieGoal, setCalorieGoal] = useState(2500);
 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
-  
   const navigate = useNavigate();
-  const CALORIE_GOAL = 2500;
 
+  // Update localStorage whenever intakeList or userProfile changes
   useEffect(() => {
     localStorage.setItem('intakeList', JSON.stringify(intakeList));
   }, [intakeList]);
 
+  useEffect(() => {
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    // Recalculate the goal whenever the profile changes
+    const newGoal = calculateCalorieGoal(userProfile);
+    setCalorieGoal(newGoal);
+  }, [userProfile]);
+
+  // Other useEffects for theme and sidebar
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
   
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setSidebarOpen(true);
-      } else {
-        setSidebarOpen(false);
-      }
-    };
+    const handleResize = () => setSidebarOpen(window.innerWidth > 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
+  // --- Handler Functions ---
   const handleAddItem = (item) => {
-    const newItem = {
-      ...item,
-      id: item.id || Date.now(), // Use existing id if editing, else new
-      date: new Date().toISOString(),
-    };
-    
-    // If editing, replace the old item; otherwise, add the new one
+    const newItem = { ...item, id: item.id || Date.now(), date: new Date().toISOString() };
     const existingIndex = intakeList.findIndex(i => i.id === newItem.id);
     if (existingIndex > -1) {
       const updatedList = [...intakeList];
@@ -63,12 +66,15 @@ const App = () => {
     } else {
       setIntakeList(prevList => [...prevList, newItem]);
     }
-    
     navigate('/history');
   };
 
   const handleDeleteItem = (id) => {
     setIntakeList(intakeList.filter(item => item.id !== id));
+  };
+
+  const handleProfileUpdate = (newProfile) => {
+    setUserProfile(newProfile);
   };
   
   const todaysCalories = calculateTodaysCalories(intakeList);
@@ -85,9 +91,11 @@ const App = () => {
         />
         <main className={styles.pageContent}>
           <Routes>
-            <Route path="/" element={<Dashboard intakeList={intakeList} calorieGoal={CALORIE_GOAL} />} />
+            <Route path="/" element={<Dashboard intakeList={intakeList} calorieGoal={calorieGoal} />} />
             <Route path="/add" element={<AddIntake handleAddItem={handleAddItem} />} />
             <Route path="/history" element={<History intakeList={intakeList} handleDeleteItem={handleDeleteItem} />} />
+            {/* Add the new route for the profile page */}
+            <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />
           </Routes>
         </main>
       </div>

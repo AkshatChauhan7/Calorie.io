@@ -3,6 +3,59 @@
  * @param {Array} intakeList - The list of intake objects.
  * @returns {number} - The total calories for today.
  */
+
+/**
+ * Calculates recommended daily calorie intake based on user profile.
+ * Uses the Mifflin-St Jeor equation for BMR and TDEE calculation.
+ * @param {Object} profile - User's profile data.
+ * @returns {number} - The calculated calorie goal.
+ */
+
+export const calculateCalorieGoal = (profile) => {
+  const { age, gender, weight, height, activityLevel, goal } = profile;
+
+  if (!age || !gender || !weight || !height || !activityLevel || !goal) {
+    return 2500; // Return default if any value is missing
+  }
+
+  // 1. Calculate BMR (Basal Metabolic Rate)
+  let bmr;
+  if (gender === 'male') {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else { // female
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  // 2. Calculate TDEE (Total Daily Energy Expenditure)
+  const activityMultipliers = {
+    sedentary: 1.2,
+    light: 1.375,
+    moderate: 1.55,
+    active: 1.725,
+    extra: 1.9,
+  };
+  const tdee = bmr * activityMultipliers[activityLevel];
+
+  // 3. Adjust for user's goal
+  let calorieGoal;
+  switch (goal) {
+    case 'lose':
+      calorieGoal = tdee - 500; // 1lb per week deficit
+      break;
+    case 'gain':
+      calorieGoal = tdee + 500; // 1lb per week surplus
+      break;
+    case 'maintain':
+    default:
+      calorieGoal = tdee;
+      break;
+  }
+
+  return Math.round(calorieGoal);
+};
+
+
+
 export const calculateTodaysCalories = (intakeList) => {
     const today = new Date().toISOString().slice(0, 10);
     return intakeList
