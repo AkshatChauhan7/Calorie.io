@@ -5,18 +5,16 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import AddIntake from './pages/AddIntake';
 import History from './pages/History';
-import Profile from './pages/Profile'; // Import the new Profile page
+import Profile from './pages/Profile'; 
 import { calculateTodaysCalories, calculateCalorieGoal } from './utils/helpers';
 import styles from './App.module.css';
 
 const App = () => {
-  // --- Intake List State ---
   const [intakeList, setIntakeList] = useState(() => {
     const localData = localStorage.getItem('intakeList');
     return localData ? JSON.parse(localData) : [];
   });
 
-  // --- User Profile State ---
   const [userProfile, setUserProfile] = useState(() => {
     const localProfile = localStorage.getItem('userProfile');
     return localProfile ? JSON.parse(localProfile) : {
@@ -24,7 +22,6 @@ const App = () => {
     };
   });
   
-  // --- Calorie Goal State (now dynamic) ---
   const [calorieGoal, setCalorieGoal] = useState(2500);
 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
