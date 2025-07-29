@@ -1,0 +1,70 @@
+.calculator {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-unit);
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+  }
+  
+  .foodSelect {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.2);
+    border: 1px solid var(--border-color);
+    border-radius: calc(var(--border-radius) / 2);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .amountContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .amountInput {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.2);
+    border: 1px solid var(--border-color);
+    border-radius: calc(var(--border-radius) / 2);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    padding-right: 40px; /* Space for the unit */
+  }
+  
+  .amountInput:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+  }
+  
+  .unitLabel {
+    position: absolute;
+    right: 12px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  .foodSelect:focus,
+  .amountInput:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+  }
+  
+  .total {
+    text-align: center;
+    margin-top: calc(var(--spacing-unit) * 1.5);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  .total span {
+    font-weight: 600;
+    color: var(--text-primary);
+  }

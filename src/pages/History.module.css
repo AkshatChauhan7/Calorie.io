@@ -1,0 +1,139 @@
+.historyPage {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+  }
+  
+  .header {
+    padding-bottom: var(--spacing-unit) * 2;
+  }
+  
+  .header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .header p {
+    color: var(--text-secondary);
+    margin-top: calc(var(--spacing-unit) / 2);
+  }
+  
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 4);
+  }
+  
+  .dateGroup {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+  
+  .dateHeading {
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 2px solid var(--accent-primary);
+    align-self: flex-start;
+  }
+  
+  .cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: calc(var(--spacing-unit) * 2.5);
+  }
+  
+  .intakeCard {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .intakeCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  
+  .cardContent {
+    padding: calc(var(--spacing-unit) * 2);
+  }
+  
+  .category {
+    display: inline-block;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+    margin-bottom: var(--spacing-unit);
+  }
+  
+  .foodName {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) / 2);
+  }
+  
+  .calories {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-unit);
+  }
+  
+  .time {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+  }
+  
+  .cardActions {
+    display: flex;
+    gap: 1px;
+    border-top: 1px solid var(--border-color);
+    overflow: hidden;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+  
+  .cardActions button {
+    flex-grow: 1;
+    background-color: var(--bg-secondary);
+    border: none;
+    padding: calc(var(--spacing-unit) * 1.5);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+    color: var(--text-primary);
+  }
+  
+  .editButton:hover {
+    background-color: var(--accent-primary);
+    color: #fff;
+  }
+  
+  .deleteButton:hover {
+    background-color: var(--danger-color);
+    color: #fff;
+  }
+  
+  .noHistory {
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 5);
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+  }
+  
+  .noHistory h3 {
+    margin-bottom: var(--spacing-unit);
+  }
+  
+  .noHistory p {
+    color: var(--text-secondary);
+  }

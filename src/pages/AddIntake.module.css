@@ -1,0 +1,120 @@
+/* --- Main Container --- */
+.formContainer {
+    /* A solid, clean container instead of glassmorphism */
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    max-width: 650px;
+    margin: 2rem auto; /* Add some margin from the top */
+    padding: calc(var(--spacing-unit) * 5);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  [data-theme='dark'] .formContainer {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* --- Form Structure & Typography --- */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * -1);
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+  }
+  
+  .formRow {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .formGroup label {
+    margin-bottom: var(--spacing-unit);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  /* --- Inputs & Select Styling --- */
+  .formGroup input,
+  .formGroup select {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.5);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    border-radius: calc(var(--border-radius) / 2);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  /* --- INTERACTIVE HOVER & FOCUS EFFECTS --- */
+  .formGroup input:hover,
+  .formGroup select:hover {
+    border-color: var(--text-secondary); /* Border color changes on hover */
+  }
+  
+  .formGroup input:focus,
+  .formGroup select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* Clear blue glow on focus */
+  }
+  
+  /* --- Buttons --- */
+  .buttonGroup {
+    margin-top: var(--spacing-unit);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-unit);
+  }
+  
+  .buttonGroup button {
+    padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 2.5);
+    border: 1px solid transparent;
+    border-radius: calc(var(--border-radius) / 1.5);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  /* Primary Button Hover Effect */
+  .submitButton {
+    background-color: var(--accent-primary);
+    color: #fff;
+  }
+  
+  .submitButton:hover {
+    background-color: var(--accent-primary-hover);
+    transform: translateY(-2px); /* Lifts the button slightly */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Secondary Button Hover Effect */
+  .cancelButton {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+  }
+  
+  .cancelButton:hover {
+    background-color: var(--bg-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }

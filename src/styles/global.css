@@ -1,0 +1,74 @@
+/* Import a modern font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- CSS Variables --- */
+:root {
+  --font-main: 'Poppins', sans-serif;
+
+  /* Light Theme */
+  --bg-primary: #f4f7fe;
+  --bg-secondary: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #e0e0e0;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --accent-primary: #3498db;
+  --accent-primary-hover: #2980b9;
+  --danger-color: #e74c3c;
+
+  /* Spacing & Radius */
+  --spacing-unit: 8px;
+  --border-radius: 12px;
+}
+
+[data-theme='dark'] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a7a7a7;
+    --border-color: #2c3a55;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    --accent-primary: #3f72af; 
+    --accent-primary-hover: #528dce;
+    --danger-color: #e94560;
+  }
+
+/* --- Global Resets & Base Styles --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-secondary);
+}
