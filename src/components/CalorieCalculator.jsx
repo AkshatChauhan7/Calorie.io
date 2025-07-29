@@ -1,36 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FOOD_DATA } from '../utils/helpers';
 import styles from './CalorieCalculator.module.css';
 
 const CalorieCalculator = () => {
-  const [selectedFood, setSelectedFood] = useState('unselected');
+  const [selectedFood, setSelectedFood] = useState(null);
   const [amount, setAmount] = useState('');
   const [totalCalories, setTotalCalories] = useState(0);
 
+  // State for the custom searchable dropdown
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
-    if (selectedFood !== 'unselected' && amount > 0) {
-      const food = FOOD_DATA[selectedFood];
-      const calculation = food.caloriesPerUnit * amount;
+    if (selectedFood && amount > 0) {
+      const calculation = selectedFood.caloriesPerUnit * amount;
       setTotalCalories(calculation);
     } else {
       setTotalCalories(0);
     }
   }, [selectedFood, amount]);
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const filteredFoods = Object.entries(FOOD_DATA).filter(([key, food]) =>
+    key !== 'unselected' && food.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSelectFood = (food) => {
+    setSelectedFood(food);
+    setSearchTerm(food.name);
+    setDropdownOpen(false);
+  };
   
-  const currentUnit = FOOD_DATA[selectedFood]?.unit || 'g';
+  const currentUnit = selectedFood?.unit || 'g';
 
   return (
     <div className={styles.calculator}>
       <div className={styles.inputGroup}>
-        <select 
-          className={styles.foodSelect}
-          value={selectedFood} 
-          onChange={(e) => setSelectedFood(e.target.value)}
-        >
-          {Object.entries(FOOD_DATA).map(([key, { name }]) => (
-            <option key={key} value={key}>{name}</option>
-          ))}
-        </select>
+        {/* Custom Searchable Dropdown */}
+        <div className={styles.dropdown} ref={dropdownRef}>
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="Search for a food..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setDropdownOpen(true);
+              setSelectedFood(null); // Reset selection when typing
+            }}
+            onFocus={() => setDropdownOpen(true)}
+          />
+          {isDropdownOpen && (
+            <ul className={styles.dropdownList}>
+              {filteredFoods.length > 0 ? (
+                filteredFoods.map(([key, food]) => (
+                  <li key={key} onClick={() => handleSelectFood(food)}>
+                    {food.name}
+                  </li>
+                ))
+              ) : (
+                <li className={styles.noResults}>No food found</li>
+              )}
+            </ul>
+          )}
+        </div>
+
         <div className={styles.amountContainer}>
           <input 
             type="number" 
@@ -38,13 +83,16 @@ const CalorieCalculator = () => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
-            disabled={selectedFood === 'unselected'}
+            disabled={!selectedFood}
           />
           <span className={styles.unitLabel}>{currentUnit}</span>
         </div>
       </div>
-      <div className={styles.total}>
-        Estimated Calories: <span>{totalCalories.toFixed(0)} kcal</span>
+      
+      <div className={styles.result}>
+        <p>Estimated Calories</p>
+        <span className={styles.calorieValue}>{totalCalories.toFixed(0)}</span>
+        <span className={styles.kcal}>kcal</span>
       </div>
     </div>
   );

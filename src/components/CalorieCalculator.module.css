@@ -1,70 +1,188 @@
+/* --- Main Glassmorphic Container --- */
 .calculator {
-    background-color: var(--bg-primary);
-    padding: var(--spacing-unit);
-    border-radius: var(--border-radius);
-    transition: background-color 0.3s;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 3);
+  padding: calc(var(--spacing-unit) * 3);
+  border-radius: 20px;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+
+  /* --- DARK THEME STYLES (Default) --- */
+  background: rgba(22, 33, 62, 0.5); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- LIGHT THEME OVERRIDE --- */
+[data-theme='light'] .calculator {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 2);
+}
+
+/* --- Custom Searchable Dropdown --- */
+.dropdown {
+  position: relative;
+}
+
+.searchInput {
+  width: 100%;
+  font-family: var(--font-main);
+}
+
+.dropdownList {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  border-radius: 12px;
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-unit);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1300;
   
-  .inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-unit);
-  }
-  
-  .foodSelect {
-    width: 100%;
-    padding: calc(var(--spacing-unit) * 1.2);
-    border: 1px solid var(--border-color);
-    border-radius: calc(var(--border-radius) / 2);
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  
-  .amountContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .amountInput {
-    width: 100%;
-    padding: calc(var(--spacing-unit) * 1.2);
-    border: 1px solid var(--border-color);
-    border-radius: calc(var(--border-radius) / 2);
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    padding-right: 40px; /* Space for the unit */
-  }
-  
-  .amountInput:disabled {
-    background-color: var(--border-color);
-    cursor: not-allowed;
-  }
-  
-  .unitLabel {
-    position: absolute;
-    right: 12px;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-  }
-  
-  .foodSelect:focus,
-  .amountInput:focus {
-    outline: none;
-    border-color: var(--accent-primary);
-  }
-  
-  .total {
-    text-align: center;
-    margin-top: calc(var(--spacing-unit) * 1.5);
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-  }
-  
-  .total span {
-    font-weight: 600;
-    color: var(--text-primary);
-  }
+  /* --- DARK THEME STYLES --- */
+  background: rgba(30, 41, 74, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+[data-theme='light'] .dropdownList {
+  background: rgba(250, 250, 250, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdownList li {
+  padding: calc(var(--spacing-unit) * 1.25);
+  color: var(--text-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownList li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+[data-theme='light'] .dropdownList li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.noResults {
+  color: var(--text-secondary);
+  cursor: default !important;
+  background-color: transparent !important;
+}
+
+/* --- Neumorphic Input Fields --- */
+.searchInput,
+.amountInput {
+  padding: calc(var(--spacing-unit) * 1.75);
+  border: none;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+
+  /* --- DARK THEME STYLES --- */
+  background-color: #1a2641;
+  box-shadow: inset 4px 4px 8px #131c31, inset -4px -4px 8px #213051;
+}
+[data-theme='light'] .searchInput,
+[data-theme='light'] .amountInput {
+  background-color: #e0e5ec;
+  box-shadow: inset 4px 4px 8px #c8cdd4, inset -4px -4px 8px #f8f9fa;
+}
+
+.searchInput:focus,
+.amountInput:focus {
+  outline: none;
+  box-shadow: inset 2px 2px 4px #131c31, inset -2px -2px 4px #213051, 0 0 0 2px var(--accent-primary-hover);
+}
+[data-theme='light'] .searchInput:focus,
+[data-theme='light'] .amountInput:focus {
+  box-shadow: inset 2px 2px 4px #c8cdd4, inset -2px -2px 4px #f8f9fa, 0 0 0 2px var(--accent-primary);
+}
+
+
+.amountInput:disabled {
+  background-color: rgba(0,0,0,0.2);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+[data-theme='light'] .amountInput:disabled {
+    background-color: #d1d9e6;
+}
+
+.amountContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.unitLabel {
+  position: absolute;
+  right: 1.2rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* --- Dynamic Result Display --- */
+.result {
+  text-align: center;
+  padding: var(--spacing-unit) * 2;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+
+  /* --- DARK THEME STYLES --- */
+  background: linear-gradient(145deg, #18233f, #1e2a4c);
+  box-shadow: 5px 5px 10px #141d34, -5px -5px 10px #223156;
+}
+[data-theme='light'] .result {
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+}
+
+.result p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.calorieValue {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  display: inline-block;
+}
+
+.kcal {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: var(--spacing-unit);
+  display: inline-block;
+}
+
+/* --- Scrollbar for Dropdown --- */
+.dropdownList::-webkit-scrollbar { width: 6px; }
+.dropdownList::-webkit-scrollbar-track { background: transparent; }
+.dropdownList::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+[data-theme='light'] .dropdownList::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}

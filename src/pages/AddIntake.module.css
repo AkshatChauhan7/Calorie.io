@@ -1,120 +1,151 @@
-/* --- Main Container --- */
-.formContainer {
-    /* A solid, clean container instead of glassmorphism */
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    max-width: 650px;
-    margin: 2rem auto; /* Add some margin from the top */
-    padding: calc(var(--spacing-unit) * 5);
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 var(--spacing-unit);
+}
+
+.formCard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px; /* Rounded corners for the card */
+  padding: calc(var(--spacing-unit) * 5);
+  box-shadow: var(--shadow);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-unit);
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* --- Responsive Grid Layout --- */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns on desktop */
+  gap: calc(var(--spacing-unit) * 3);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullWidth {
+  grid-column: 1 / -1; /* Makes an element span both columns */
+}
+
+.formGroup label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.icon {
+  font-size: 1.1rem;
+}
+
+/* --- Input & Select Fields --- */
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.75); /* Generous padding */
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: var(--font-main);
+  transition: all 0.2s ease;
+}
+
+.formGroup input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.formGroup select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23a7a7a7' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.25rem center;
+  background-size: 1em;
+  padding-right: 3rem;
+}
+
+/* --- Buttons --- */
+.buttonGroup {
+  margin-top: calc(var(--spacing-unit) * 4);
+  padding-top: calc(var(--spacing-unit) * 3);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-unit) * 1.5;
+}
+
+.buttonGroup button {
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitButton {
+  background-color: var(--accent-primary);
+  color: #fff;
+}
+
+.submitButton:hover {
+  background-color: var(--accent-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cancelButton {
+  background-color: transparent;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.cancelButton:hover {
+  background-color: var(--bg-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+/* --- Mobile Responsive Behavior --- */
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr; /* Stack to one column on mobile */
   }
-  
-  [data-theme='dark'] .formContainer {
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  .formCard {
+    padding: calc(var(--spacing-unit) * 3);
   }
-  
-  /* --- Form Structure & Typography --- */
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 3);
+
+  .header h2 {
+    font-size: 1.5rem;
   }
-  
-  .title {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: calc(var(--spacing-unit) * -1);
-  }
-  
-  .subtitle {
-    text-align: center;
-    color: var(--text-secondary);
-  }
-  
-  .formRow {
-    display: flex;
-    gap: calc(var(--spacing-unit) * 2);
-  }
-  
-  .formGroup {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-  
-  .formGroup label {
-    margin-bottom: var(--spacing-unit);
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-  
-  /* --- Inputs & Select Styling --- */
-  .formGroup input,
-  .formGroup select {
-    width: 100%;
-    padding: calc(var(--spacing-unit) * 1.5);
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-primary);
-    border-radius: calc(var(--border-radius) / 2);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.2s ease;
-  }
-  
-  /* --- INTERACTIVE HOVER & FOCUS EFFECTS --- */
-  .formGroup input:hover,
-  .formGroup select:hover {
-    border-color: var(--text-secondary); /* Border color changes on hover */
-  }
-  
-  .formGroup input:focus,
-  .formGroup select:focus {
-    outline: none;
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* Clear blue glow on focus */
-  }
-  
-  /* --- Buttons --- */
-  .buttonGroup {
-    margin-top: var(--spacing-unit);
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--spacing-unit);
-  }
-  
-  .buttonGroup button {
-    padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 2.5);
-    border: 1px solid transparent;
-    border-radius: calc(var(--border-radius) / 1.5);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  /* Primary Button Hover Effect */
-  .submitButton {
-    background-color: var(--accent-primary);
-    color: #fff;
-  }
-  
-  .submitButton:hover {
-    background-color: var(--accent-primary-hover);
-    transform: translateY(-2px); /* Lifts the button slightly */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Secondary Button Hover Effect */
-  .cancelButton {
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color);
-    color: var(--text-secondary);
-  }
-  
-  .cancelButton:hover {
-    background-color: var(--bg-primary);
-    border-color: var(--text-secondary);
-    color: var(--text-primary);
-  }
+}

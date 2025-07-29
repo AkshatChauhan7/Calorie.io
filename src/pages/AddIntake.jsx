@@ -39,30 +39,36 @@ const AddIntake = ({ handleAddItem }) => {
       return;
     }
     handleAddItem(formData);
-    // Form is cleared and user redirected by App.jsx logic
   };
 
   return (
-    <div className={styles.formContainer}>
-      <h2>{itemToEdit ? 'Edit Calorie Intake' : 'Add Calorie Intake'}</h2>
-      <p>Log what you've eaten to keep track of your daily progress.</p>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label htmlFor="foodItem">Food Item</label>
-          <input
-            type="text"
-            id="foodItem"
-            name="foodItem"
-            value={formData.foodItem}
-            onChange={handleChange}
-            placeholder="e.g., Apple, Chicken Salad"
-            required
-          />
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.formCard}>
+        <div className={styles.header}>
+          <h2>{itemToEdit ? 'Edit Calorie Intake' : 'Add Calorie Intake'}</h2>
+          <p>Log what you've eaten to keep track of your daily progress.</p>
         </div>
 
-        <div className={styles.formRow}>
+        <div className={styles.formGrid}>
+          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+            <label htmlFor="foodItem">
+              <span className={styles.icon}>🍎</span> Food Item
+            </label>
+            <input
+              type="text"
+              id="foodItem"
+              name="foodItem"
+              value={formData.foodItem}
+              onChange={handleChange}
+              placeholder="e.g., Apple, Chicken Salad"
+              required
+            />
+          </div>
+
           <div className={styles.formGroup}>
-            <label htmlFor="quantity">Quantity</label>
+            <label htmlFor="quantity">
+              <span className={styles.icon}>📦</span> Quantity
+            </label>
             <input
               type="text"
               id="quantity"
@@ -72,8 +78,11 @@ const AddIntake = ({ handleAddItem }) => {
               placeholder="e.g., 1 medium, 200g"
             />
           </div>
+
           <div className={styles.formGroup}>
-            <label htmlFor="calories">Estimated Calories</label>
+            <label htmlFor="calories">
+              <span className={styles.icon}>🔥</span> Estimated Calories
+            </label>
             <input
               type="number"
               id="calories"
@@ -84,16 +93,18 @@ const AddIntake = ({ handleAddItem }) => {
               required
             />
           </div>
-        </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" value={formData.category} onChange={handleChange}>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Snack">Snack</option>
-          </select>
+          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+            <label htmlFor="category">
+            <span className={styles.icon}>🏷️</span> Category
+            </label>
+            <select id="category" name="category" value={formData.category} onChange={handleChange}>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Snack">Snack</option>
+            </select>
+          </div>
         </div>
         
         <div className={styles.buttonGroup}>
