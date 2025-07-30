@@ -4,7 +4,7 @@ import CalorieCalculator from './CalorieCalculator';
 import Modal from './Modal';
 import styles from './Sidebar.module.css';
 
-const Sidebar = ({ isOpen, setSidebarOpen }) => {
+const Sidebar = ({ isOpen, setSidebarOpen, handleSaveItem }) => {
   const [isCalculatorOpen, setCalculatorOpen] = useState(false);
 
   return (
@@ -42,7 +42,7 @@ const Sidebar = ({ isOpen, setSidebarOpen }) => {
       
       <Modal isOpen={isCalculatorOpen} onClose={() => setCalculatorOpen(false)}>
         <h2 className={styles.modalTitle}>Quick Calculator</h2>
-        <CalorieCalculator />
+        <CalorieCalculator handleSaveItem={handleSaveItem} onClose={() => setCalculatorOpen(false)} />
       </Modal>
 
       {isOpen && <div className={styles.overlay} onClick={() => setSidebarOpen(false)}></div>}

@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FOOD_DATA } from '../utils/helpers';
 import styles from './CalorieCalculator.module.css';
 
-const CalorieCalculator = () => {
+const CalorieCalculator = ({ handleSaveItem, onClose }) => {
   const [selectedFood, setSelectedFood] = useState(null);
   const [amount, setAmount] = useState('');
   const [totalCalories, setTotalCalories] = useState(0);
   const [totalProtein, setTotalProtein] = useState(0);
-  const [totalCarbs, setTotalCarbs] = useState(0);   // ADDED: Carbs state
-  const [totalFats, setTotalFats] = useState(0);     // ADDED: Fats state
+  const [totalCarbs, setTotalCarbs] = useState(0);
+  const [totalFats, setTotalFats] = useState(0);
+  const [category, setCategory] = useState('Snack'); // ADDED: Category state
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -18,13 +19,13 @@ const CalorieCalculator = () => {
     if (selectedFood && amount > 0) {
       setTotalCalories(selectedFood.caloriesPerUnit * amount);
       setTotalProtein(selectedFood.proteinPerUnit * amount);
-      setTotalCarbs(selectedFood.carbsPerUnit * amount);   // ADDED: Calculate carbs
-      setTotalFats(selectedFood.fatsPerUnit * amount);     // ADDED: Calculate fats
+      setTotalCarbs(selectedFood.carbsPerUnit * amount);
+      setTotalFats(selectedFood.fatsPerUnit * amount);
     } else {
       setTotalCalories(0);
       setTotalProtein(0);
-      setTotalCarbs(0);   // ADDED: Reset carbs
-      setTotalFats(0);    // ADDED: Reset fats
+      setTotalCarbs(0);
+      setTotalFats(0);
     }
   }, [selectedFood, amount]);
 
@@ -46,6 +47,24 @@ const CalorieCalculator = () => {
     setSelectedFood(food);
     setSearchTerm(food.name);
     setDropdownOpen(false);
+  };
+
+  const handleAddEntry = () => {
+    if (!selectedFood || !amount || amount <= 0) {
+      alert('Please select a food and enter a valid amount.');
+      return;
+    }
+    const newEntry = {
+      foodItem: selectedFood.name,
+      quantity: `${amount} ${selectedFood.unit}`,
+      calories: totalCalories,
+      protein: totalProtein,
+      carbs: totalCarbs,
+      fats: totalFats,
+      category: category, // Use selected category
+    };
+    handleSaveItem(newEntry);
+    onClose();
   };
   
   const currentUnit = selectedFood?.unit || 'g';
@@ -94,9 +113,20 @@ const CalorieCalculator = () => {
           />
           <span className={styles.unitLabel}>{currentUnit}</span>
         </div>
+        
+        {/* Category Select */}
+        <div className={styles.formGroup}>
+            <label htmlFor="category">Category</label>
+            <select id="category" name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Snack">Snack</option>
+            </select>
+          </div>
       </div>
       
-      {/* UPDATED: Result Display Grid */}
+      {/* Result Display Grid */}
       <div className={styles.resultGrid}>
         <div className={styles.resultItem}>
             <p>Calories</p>
@@ -119,6 +149,7 @@ const CalorieCalculator = () => {
             <span className={styles.unit}>g</span>
         </div>
       </div>
+      <button onClick={handleAddEntry} className={styles.addEntryButton}>Add Entry</button>
     </div>
   );
 };

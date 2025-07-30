@@ -165,3 +165,153 @@
   margin-left: calc(var(--spacing-unit) / 2);
   display: inline-block;
 }
+/* ... (keep all existing styles from .calculator to .unit) ... */
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--spacing-unit) * 2);
+  text-align: center;
+  background: linear-gradient(145deg, #18233f, #1e2a4c);
+  box-shadow: 5px 5px 10px #141d34, -5px -5px 10px #223156;
+  padding: calc(var(--spacing-unit) * 2);
+  border-radius: 16px;
+}
+[data-theme='light'] .resultGrid {
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+}
+
+.resultItem p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  display: inline-block;
+}
+
+.unit {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: calc(var(--spacing-unit) / 2);
+  display: inline-block;
+}
+
+.addEntryButton {
+    background-color: var(--accent-primary);
+    color: #fff;
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: calc(var(--spacing-unit) * 2);
+}
+
+.addEntryButton:hover {
+    background-color: var(--accent-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+/* ... (keep all existing styles from .calculator to .unit) ... */
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--spacing-unit) * 2);
+  text-align: center;
+  background: linear-gradient(145deg, #18233f, #1e2a4c);
+  box-shadow: 5px 5px 10px #141d34, -5px -5px 10px #223156;
+  padding: calc(var(--spacing-unit) * 2);
+  border-radius: 16px;
+}
+[data-theme='light'] .resultGrid {
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+}
+
+.resultItem p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  display: inline-block;
+}
+
+.unit {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: calc(var(--spacing-unit) / 2);
+  display: inline-block;
+}
+
+.addEntryButton {
+    background-color: var(--accent-primary);
+    color: #fff;
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: calc(var(--spacing-unit) * 2);
+}
+
+.addEntryButton:hover {
+    background-color: var(--accent-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.formGroup select {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.75); /* Generous padding */
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: var(--font-main);
+  transition: all 0.2s ease;
+}
+
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}

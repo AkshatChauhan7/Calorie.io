@@ -132,7 +132,7 @@ const App = () => {
 
   return (
     <div className={styles.appContainer}>
-      <Sidebar isOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar isOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} handleSaveItem={handleSaveItem} />
       <div className={`${styles.mainContent} ${isSidebarOpen ? styles.shifted : ''}`}>
         <Navbar 
           todaysCalories={todaysCalories} 
