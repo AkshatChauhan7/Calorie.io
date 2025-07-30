@@ -7,8 +7,8 @@ import styles from './Dashboard.module.css';
 const mealIcons = {
   Breakfast: '🥞',
   Lunch: '🥗',
-  Dinner: '🍲',
-  Snack: '🍿',
+  Dinner: '🍛',
+  Snack: '🍎',
 };
 
 const Dashboard = ({ intakeList, calorieGoal }) => {
@@ -30,7 +30,6 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
       </header>
 
       <div className={styles.summaryGrid}>
-        {/* We will add a highlight class here to make the first card stand out */}
         <div className={`${styles.summaryCard} ${styles.highlightCard}`}>
           <h3>Consumed</h3>
           <p><span>{todaysCalories}</span> kcal</p>
@@ -45,7 +44,6 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
         </div>
       </div>
       
-      {/* Redesigned Progress Bar */}
       <div className={styles.progressContainer}>
         <div className={styles.progressBar} style={{ width: `${progress}%` }}>
           <span>{progress.toFixed(0)}%</span>

@@ -1,4 +1,4 @@
-/* --- Main Glassmorphic Container --- */
+/* ... (keep all existing styles from .calculator to .unitLabel) ... */
 .calculator {
   display: flex;
   flex-direction: column;
@@ -6,8 +6,6 @@
   padding: calc(var(--spacing-unit) * 3);
   border-radius: 20px;
   transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-
-  /* --- DARK THEME STYLES (Default) --- */
   background: rgba(22, 33, 62, 0.5); 
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -15,7 +13,6 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-/* --- LIGHT THEME OVERRIDE --- */
 [data-theme='light'] .calculator {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -28,7 +25,6 @@
   gap: calc(var(--spacing-unit) * 2);
 }
 
-/* --- Custom Searchable Dropdown --- */
 .dropdown {
   position: relative;
 }
@@ -50,8 +46,6 @@
   max-height: 150px;
   overflow-y: auto;
   z-index: 1300;
-  
-  /* --- DARK THEME STYLES --- */
   background: rgba(30, 41, 74, 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -82,7 +76,6 @@
   background-color: transparent !important;
 }
 
-/* --- Neumorphic Input Fields --- */
 .searchInput,
 .amountInput {
   padding: calc(var(--spacing-unit) * 1.75);
@@ -91,8 +84,6 @@
   color: var(--text-primary);
   font-size: 1rem;
   transition: all 0.2s ease;
-
-  /* --- DARK THEME STYLES --- */
   background-color: #1a2641;
   box-shadow: inset 4px 4px 8px #131c31, inset -4px -4px 8px #213051;
 }
@@ -111,7 +102,6 @@
 [data-theme='light'] .amountInput:focus {
   box-shadow: inset 2px 2px 4px #c8cdd4, inset -2px -2px 4px #f8f9fa, 0 0 0 2px var(--accent-primary);
 }
-
 
 .amountInput:disabled {
   background-color: rgba(0,0,0,0.2);
@@ -135,54 +125,55 @@
   font-size: 1rem;
 }
 
-/* --- Dynamic Result Display --- */
+/* --- NEW STYLES FOR DUAL RESULT DISPLAY --- */
 .result {
+  display: flex;
+  align-items: center;
   text-align: center;
-  padding: var(--spacing-unit) * 2;
   border-radius: 16px;
   transition: all 0.3s ease;
-
-  /* --- DARK THEME STYLES --- */
   background: linear-gradient(145deg, #18233f, #1e2a4c);
   box-shadow: 5px 5px 10px #141d34, -5px -5px 10px #223156;
+  padding: calc(var(--spacing-unit) * 2);
 }
 [data-theme='light'] .result {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
 }
 
-.result p {
+.resultItem {
+    flex: 1;
+}
+
+.resultItem p {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  margin: 0;
+  margin: 0 0 4px 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.calorieValue {
-  font-size: 3.5rem;
+.value {
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.1;
   display: inline-block;
 }
 
-.kcal {
-  font-size: 1.5rem;
+.unit {
+  font-size: 1rem;
   font-weight: 500;
   color: var(--text-secondary);
   margin-left: var(--spacing-unit);
   display: inline-block;
 }
 
-/* --- Scrollbar for Dropdown --- */
-.dropdownList::-webkit-scrollbar { width: 6px; }
-.dropdownList::-webkit-scrollbar-track { background: transparent; }
-.dropdownList::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-[data-theme='light'] .dropdownList::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+.divider {
+    width: 2px;
+    align-self: stretch;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    margin: -8px 8px; /* Adjust margin to fit nicely */
 }

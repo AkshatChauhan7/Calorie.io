@@ -1,0 +1,73 @@
+.container {
+    padding: var(--spacing-unit);
+  }
+  
+  .title {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    color: var(--text-primary);
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup label {
+    margin-bottom: var(--spacing-unit);
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.5);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: calc(var(--spacing-unit) * 2);
+    margin-top: calc(var(--spacing-unit) * 2);
+  }
+  
+  .buttonGroup button {
+    padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 2.5);
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .saveButton {
+    background-color: var(--accent-primary);
+    color: #fff;
+  }
+  
+  .saveButton:hover {
+    background-color: var(--accent-primary-hover);
+  }
+  
+  .cancelButton {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+  }
+  
+  .cancelButton:hover {
+    background-color: var(--bg-primary);
+  }
+  

@@ -6,10 +6,16 @@ const History = ({ intakeList, handleDeleteItem }) => {
   const navigate = useNavigate();
 
   const handleEdit = (item) => {
-    navigate('/add', { state: { itemToEdit: item } });
+    navigate('/add', { 
+      state: { 
+        itemToEdit: {
+          ...item,
+          id: item.id 
+        }
+      } 
+    });
   };
 
-  // Group intake items by date
   const groupedByDate = intakeList.reduce((acc, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
       year: 'numeric',

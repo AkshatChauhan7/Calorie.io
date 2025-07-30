@@ -2,45 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
+import { intakeAPI, profileAPI } from './services/api'; 
 import Dashboard from './pages/Dashboard';
 import AddIntake from './pages/AddIntake';
 import History from './pages/History';
 import Profile from './pages/Profile'; 
+import ProteinCalculator from './pages/ProteinCalculator'; // Import the new page
 import { calculateTodaysCalories, calculateCalorieGoal } from './utils/helpers';
 import styles from './App.module.css';
 
 const App = () => {
-  const [intakeList, setIntakeList] = useState(() => {
-    const localData = localStorage.getItem('intakeList');
-    return localData ? JSON.parse(localData) : [];
+  // ... (keep all existing state and functions)
+  const [intakeList, setIntakeList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState({
+    age: '', gender: 'female', weight: '', height: '', activityLevel: 'sedentary', goal: 'maintain'
   });
-
-  const [userProfile, setUserProfile] = useState(() => {
-    const localProfile = localStorage.getItem('userProfile');
-    return localProfile ? JSON.parse(localProfile) : {
-      age: '', gender: 'female', weight: '', height: '', activityLevel: 'sedentary', goal: 'maintain'
-    };
-  });
-  
   const [calorieGoal, setCalorieGoal] = useState(2500);
-
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
   const navigate = useNavigate();
 
-  // Update localStorage whenever intakeList or userProfile changes
   useEffect(() => {
-    localStorage.setItem('intakeList', JSON.stringify(intakeList));
-  }, [intakeList]);
+    const loadAppData = async () => {
+      try {
+        const intakes = await intakeAPI.getAll();
+        const profile = await profileAPI.get();
+        setIntakeList(intakes);
+        if (profile) {
+          setUserProfile(profile);
+        }
+      } catch (error) {
+        console.error('Error loading app data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadAppData();
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem('userProfile', JSON.stringify(userProfile));
-    // Recalculate the goal whenever the profile changes
     const newGoal = calculateCalorieGoal(userProfile);
     setCalorieGoal(newGoal);
   }, [userProfile]);
 
-  // Other useEffects for theme and sidebar
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
@@ -52,29 +57,67 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // --- Handler Functions ---
-  const handleAddItem = (item) => {
-    const newItem = { ...item, id: item.id || Date.now(), date: new Date().toISOString() };
-    const existingIndex = intakeList.findIndex(i => i.id === newItem.id);
-    if (existingIndex > -1) {
-      const updatedList = [...intakeList];
-      updatedList[existingIndex] = newItem;
-      setIntakeList(updatedList);
-    } else {
-      setIntakeList(prevList => [...prevList, newItem]);
+  const handleSaveItem = async (item) => {
+    try {
+      setLoading(true);
+      const intakeData = {
+        foodItem: item.foodItem,
+        quantity: item.quantity || '',
+        calories: Number(item.calories),
+        category: item.category,
+        date: item.id ? item.date : new Date().toISOString()
+      };
+      if (item.id) {
+        await intakeAPI.update(item.id, intakeData);
+      } else {
+        await intakeAPI.add(intakeData);
+      }
+      const data = await intakeAPI.getAll();
+      setIntakeList(data);
+      navigate('/history');
+    } catch (error) {
+      console.error('Error saving intake:', error);
+      alert('Failed to save intake. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    navigate('/history');
   };
 
-  const handleDeleteItem = (id) => {
-    setIntakeList(intakeList.filter(item => item.id !== id));
+  const handleDeleteItem = async (id) => {
+    try {
+      setLoading(true);
+      await intakeAPI.delete(id);
+      const data = await intakeAPI.getAll();
+      setIntakeList(data);
+    } catch (error) {
+      console.error('Error deleting intake:', error);
+      alert('Failed to delete intake. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleProfileUpdate = (newProfile) => {
-    setUserProfile(newProfile);
+  const handleProfileUpdate = async (newProfile) => {
+    try {
+      const updatedProfile = await profileAPI.update(newProfile);
+      setUserProfile(updatedProfile);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile.');
+    }
   };
   
   const todaysCalories = calculateTodaysCalories(intakeList);
+
+  if (loading) {
+    return (
+      <div className="loadingContainer">
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.appContainer}>
@@ -89,10 +132,11 @@ const App = () => {
         <main className={styles.pageContent}>
           <Routes>
             <Route path="/" element={<Dashboard intakeList={intakeList} calorieGoal={calorieGoal} />} />
-            <Route path="/add" element={<AddIntake handleAddItem={handleAddItem} />} />
+            <Route path="/add" element={<AddIntake handleSaveItem={handleSaveItem} />} />
             <Route path="/history" element={<History intakeList={intakeList} handleDeleteItem={handleDeleteItem} />} />
-            {/* Add the new route for the profile page */}
             <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />
+            {/* Add the new route */}
+            <Route path="/protein" element={<ProteinCalculator />} />
           </Routes>
         </main>
       </div>

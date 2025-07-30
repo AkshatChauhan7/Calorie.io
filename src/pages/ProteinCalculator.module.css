@@ -1,0 +1,186 @@
+/* Main container with a two-column layout on larger screens */
+.container {
+    display: grid;
+    grid-template-columns: 1fr; /* Default to a single column */
+    gap: calc(var(--spacing-unit) * 4);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  /* Two-column layout for wider screens */
+  @media (min-width: 992px) {
+    .container {
+      grid-template-columns: 2fr 1fr; /* Two columns: form on the left, tracker on the right */
+    }
+  }
+  
+  /* Styling for the main calculator card */
+  .calculatorCard {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing-unit) * 4);
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .calculatorCard:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    color: var(--text-primary);
+    background: linear-gradient(90deg, var(--accent-primary), #9b59b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Grid layout for the form */
+  .form .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: calc(var(--spacing-unit) * 3);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .formGroup.fullWidth {
+    grid-column: 1 / -1;
+  }
+  
+  .formGroup label {
+    margin-bottom: var(--spacing-unit);
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  /* Enhanced styling for input fields and select dropdowns */
+  .formGroup input,
+  .formGroup select {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .formGroup input:focus,
+  .formGroup select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+  }
+  
+  /* Main call-to-action button styling */
+  .calculateButton, .logButton {
+    display: block;
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.75);
+    border: none;
+    border-radius: var(--border-radius);
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-hover));
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .calculateButton:hover, .logButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  
+  /* Styling for the results card */
+  .resultCard {
+    margin-top: calc(var(--spacing-unit) * 4);
+    padding: calc(var(--spacing-unit) * 3);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+    color: #fff;
+    border-radius: var(--border-radius);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .resultCard h3 {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: var(--spacing-unit);
+  }
+  
+  .resultCard p {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+  }
+  
+  .resultCard p span {
+    font-size: inherit;
+  }
+  
+  /* Styling for the daily tracker card */
+  .trackerCard {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing-unit) * 4);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .trackerInputContainer {
+    position: relative;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+  }
+  
+  .trackerInput {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding: calc(var(--spacing-unit) * 2);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    background: none;
+    color: var(--text-primary);
+    transition: border-color 0.3s;
+  }
+  
+  .trackerInput:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+  }
+  
+  .trackerInputContainer .unit {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  

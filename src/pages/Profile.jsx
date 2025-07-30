@@ -12,7 +12,6 @@ const Profile = ({ userProfile, handleProfileUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleProfileUpdate(profile);
-    // A more modern notification than alert() could be a future step
     alert('Your profile has been updated!'); 
   };
 
@@ -25,7 +24,6 @@ const Profile = ({ userProfile, handleProfileUpdate }) => {
         </div>
 
         <div className={styles.formGrid}>
-          {/* Personal Details Section */}
           <div className={styles.formGroup}>
             <label htmlFor="age">Age</label>
             <input type="number" name="age" value={profile.age} onChange={handleChange} required />
@@ -46,7 +44,6 @@ const Profile = ({ userProfile, handleProfileUpdate }) => {
             <input type="number" name="height" value={profile.height} onChange={handleChange} required />
           </div>
 
-          {/* Activity Level Section */}
           <div className={`${styles.formGroup} ${styles.fullWidth}`}>
             <label>Activity Level</label>
             <select name="activityLevel" value={profile.activityLevel} onChange={handleChange} required>
@@ -58,7 +55,6 @@ const Profile = ({ userProfile, handleProfileUpdate }) => {
             </select>
           </div>
           
-          {/* Goal Section */}
           <div className={`${styles.formGroup} ${styles.fullWidth}`}>
             <label>Your Goal</label>
             <div className={styles.goalOptions}>

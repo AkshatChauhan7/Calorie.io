@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './AddIntake.module.css';
 
-const AddIntake = ({ handleAddItem }) => {
+const AddIntake = ({ handleSaveItem }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const itemToEdit = location.state?.itemToEdit;
@@ -12,7 +12,8 @@ const AddIntake = ({ handleAddItem }) => {
     foodItem: '',
     quantity: '',
     calories: '',
-    category: 'Snack'
+    category: 'Snack',
+    date: null
   });
 
   useEffect(() => {
@@ -22,7 +23,8 @@ const AddIntake = ({ handleAddItem }) => {
         foodItem: itemToEdit.foodItem,
         quantity: itemToEdit.quantity,
         calories: itemToEdit.calories,
-        category: itemToEdit.category
+        category: itemToEdit.category,
+        date: itemToEdit.date
       });
     }
   }, [itemToEdit]);
@@ -38,7 +40,7 @@ const AddIntake = ({ handleAddItem }) => {
       alert('Please fill in at least the food item and calories.');
       return;
     }
-    handleAddItem(formData);
+    handleSaveItem(formData);
   };
 
   return (
@@ -52,7 +54,7 @@ const AddIntake = ({ handleAddItem }) => {
         <div className={styles.formGrid}>
           <div className={`${styles.formGroup} ${styles.fullWidth}`}>
             <label htmlFor="foodItem">
-              <span className={styles.icon}>🍎</span> Food Item
+              <span className={styles.icon}>🍳</span> Food Item
             </label>
             <input
               type="text"
@@ -67,7 +69,7 @@ const AddIntake = ({ handleAddItem }) => {
 
           <div className={styles.formGroup}>
             <label htmlFor="quantity">
-              <span className={styles.icon}>📦</span> Quantity
+              <span className={styles.icon}>⚖️</span> Quantity
             </label>
             <input
               type="text"

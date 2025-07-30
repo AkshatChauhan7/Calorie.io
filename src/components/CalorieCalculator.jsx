@@ -6,22 +6,23 @@ const CalorieCalculator = () => {
   const [selectedFood, setSelectedFood] = useState(null);
   const [amount, setAmount] = useState('');
   const [totalCalories, setTotalCalories] = useState(0);
+  const [totalProtein, setTotalProtein] = useState(0); // New state for protein
 
-  // State for the custom searchable dropdown
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     if (selectedFood && amount > 0) {
-      const calculation = selectedFood.caloriesPerUnit * amount;
-      setTotalCalories(calculation);
+      setTotalCalories(selectedFood.caloriesPerUnit * amount);
+      setTotalProtein(selectedFood.proteinPerUnit * amount); // Calculate protein
     } else {
       setTotalCalories(0);
+      setTotalProtein(0); // Reset protein
     }
   }, [selectedFood, amount]);
 
-  // Close dropdown if clicked outside
+  // useEffect for closing dropdown remains the same...
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -47,7 +48,7 @@ const CalorieCalculator = () => {
   return (
     <div className={styles.calculator}>
       <div className={styles.inputGroup}>
-        {/* Custom Searchable Dropdown */}
+        {/* Searchable Dropdown */}
         <div className={styles.dropdown} ref={dropdownRef}>
           <input
             type="text"
@@ -57,7 +58,7 @@ const CalorieCalculator = () => {
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setDropdownOpen(true);
-              setSelectedFood(null); // Reset selection when typing
+              setSelectedFood(null);
             }}
             onFocus={() => setDropdownOpen(true)}
           />
@@ -76,6 +77,7 @@ const CalorieCalculator = () => {
           )}
         </div>
 
+        {/* Amount Input */}
         <div className={styles.amountContainer}>
           <input 
             type="number" 
@@ -89,10 +91,19 @@ const CalorieCalculator = () => {
         </div>
       </div>
       
+      {/* Updated Result Display */}
       <div className={styles.result}>
-        <p>Estimated Calories</p>
-        <span className={styles.calorieValue}>{totalCalories.toFixed(0)}</span>
-        <span className={styles.kcal}>kcal</span>
+        <div className={styles.resultItem}>
+            <p>Calories</p>
+            <span className={styles.value}>{totalCalories.toFixed(0)}</span>
+            <span className={styles.unit}>kcal</span>
+        </div>
+        <div className={styles.divider}></div>
+        <div className={styles.resultItem}>
+            <p>Protein</p>
+            <span className={styles.value}>{totalProtein.toFixed(1)}</span>
+            <span className={styles.unit}>grams</span>
+        </div>
       </div>
     </div>
   );
