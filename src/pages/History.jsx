@@ -10,12 +10,13 @@ const History = ({ intakeList, handleDeleteItem }) => {
       state: { 
         itemToEdit: {
           ...item,
-          id: item.id 
+          id: item._id // Pass the database ID for editing
         }
       } 
     });
   };
 
+  // Group intake items by date
   const groupedByDate = intakeList.reduce((acc, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -45,7 +46,7 @@ const History = ({ intakeList, handleDeleteItem }) => {
               <h3 className={styles.dateHeading}>{date}</h3>
               <div className={styles.cardGrid}>
                 {groupedByDate[date].sort((a,b) => new Date(b.date) - new Date(a.date)).map(item => (
-                  <div key={item.id} className={styles.intakeCard}>
+                  <div key={item._id} className={styles.intakeCard}>
                     <div className={styles.cardContent}>
                       <span className={styles.category}>{item.category}</span>
                       <h4 className={styles.foodName}>{item.foodItem}</h4>
@@ -54,7 +55,9 @@ const History = ({ intakeList, handleDeleteItem }) => {
                     </div>
                     <div className={styles.cardActions}>
                       <button onClick={() => handleEdit(item)} className={styles.editButton}>Edit</button>
-                      <button onClick={() => handleDeleteItem(item.id)} className={styles.deleteButton}>Delete</button>
+                      {/* --- THIS IS THE FIX --- */}
+                      {/* Use item._id to ensure the correct database ID is passed */}
+                      <button onClick={() => handleDeleteItem(item._id)} className={styles.deleteButton}>Delete</button>
                     </div>
                   </div>
                 ))}

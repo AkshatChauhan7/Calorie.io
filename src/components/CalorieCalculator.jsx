@@ -6,7 +6,9 @@ const CalorieCalculator = () => {
   const [selectedFood, setSelectedFood] = useState(null);
   const [amount, setAmount] = useState('');
   const [totalCalories, setTotalCalories] = useState(0);
-  const [totalProtein, setTotalProtein] = useState(0); // New state for protein
+  const [totalProtein, setTotalProtein] = useState(0);
+  const [totalCarbs, setTotalCarbs] = useState(0);   // ADDED: Carbs state
+  const [totalFats, setTotalFats] = useState(0);     // ADDED: Fats state
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -15,14 +17,17 @@ const CalorieCalculator = () => {
   useEffect(() => {
     if (selectedFood && amount > 0) {
       setTotalCalories(selectedFood.caloriesPerUnit * amount);
-      setTotalProtein(selectedFood.proteinPerUnit * amount); // Calculate protein
+      setTotalProtein(selectedFood.proteinPerUnit * amount);
+      setTotalCarbs(selectedFood.carbsPerUnit * amount);   // ADDED: Calculate carbs
+      setTotalFats(selectedFood.fatsPerUnit * amount);     // ADDED: Calculate fats
     } else {
       setTotalCalories(0);
-      setTotalProtein(0); // Reset protein
+      setTotalProtein(0);
+      setTotalCarbs(0);   // ADDED: Reset carbs
+      setTotalFats(0);    // ADDED: Reset fats
     }
   }, [selectedFood, amount]);
 
-  // useEffect for closing dropdown remains the same...
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -91,18 +96,27 @@ const CalorieCalculator = () => {
         </div>
       </div>
       
-      {/* Updated Result Display */}
-      <div className={styles.result}>
+      {/* UPDATED: Result Display Grid */}
+      <div className={styles.resultGrid}>
         <div className={styles.resultItem}>
             <p>Calories</p>
             <span className={styles.value}>{totalCalories.toFixed(0)}</span>
             <span className={styles.unit}>kcal</span>
         </div>
-        <div className={styles.divider}></div>
         <div className={styles.resultItem}>
             <p>Protein</p>
             <span className={styles.value}>{totalProtein.toFixed(1)}</span>
-            <span className={styles.unit}>grams</span>
+            <span className={styles.unit}>g</span>
+        </div>
+        <div className={styles.resultItem}>
+            <p>Carbs</p>
+            <span className={styles.value}>{totalCarbs.toFixed(1)}</span>
+            <span className={styles.unit}>g</span>
+        </div>
+        <div className={styles.resultItem}>
+            <p>Fats</p>
+            <span className={styles.value}>{totalFats.toFixed(1)}</span>
+            <span className={styles.unit}>g</span>
         </div>
       </div>
     </div>

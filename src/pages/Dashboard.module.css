@@ -1,200 +1,198 @@
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 3);
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-  }
-  
-  .addButton {
-    background-color: var(--accent-primary);
-    color: white;
-    padding: calc(var(--spacing-unit) * 1.2) calc(var(--spacing-unit) * 2.5);
-    border-radius: var(--border-radius);
-    font-weight: 500;
-    transition: all 0.2s;
-  }
-  
-  .addButton:hover {
-    background-color: var(--accent-primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .summaryGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: calc(var(--spacing-unit) * 3);
-  }
-  
-  .summaryCard {
-    background-color: var(--bg-secondary);
-    padding: calc(var(--spacing-unit) * 3);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
-  }
-  
-  .summaryCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-    /* The main change: The border lights up with your accent color */
-    border-color: var(--accent-primary);
-  }
-  
-  /* --- Style for the highlighted "Consumed" card --- */
-  .highlightCard {
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
-    border: none;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 3);
+}
 
-  .highlightCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.header h2 {
+font-size: 1.8rem;
+font-weight: 600;
+}
+
+.addButton {
+background-color: var(--accent-primary);
+color: white;
+padding: calc(var(--spacing-unit) * 1.2) calc(var(--spacing-unit) * 2.5);
+border-radius: var(--border-radius);
+font-weight: 500;
+transition: all 0.2s;
+}
+
+.addButton:hover {
+background-color: var(--accent-primary-hover);
+transform: translateY(-2px);
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.summaryGrid {
+display: grid;
+/* UPDATED: Grid layout for 4 items */
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: calc(var(--spacing-unit) * 2.5);
+}
+
+.summaryCard {
+background-color: var(--bg-secondary);
+padding: calc(var(--spacing-unit) * 2.5);
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+transition: all 0.3s ease;
+border: 1px solid var(--border-color);
+text-align: center;
+}
+
+.summaryCard:hover {
+transform: translateY(-5px);
+box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+border-color: var(--accent-primary);
+}
+
+.highlightCard {
+background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+border: none;
+}
+
+.highlightCard:hover {
+transform: translateY(-5px);
+box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
+
+.summaryCard.highlightCard h3,
+.summaryCard.highlightCard p, 
+.summaryCard.highlightCard p span {
+color: #fff;
 }
   
-  /* Specific rules to force white text on the highlight card */
-  .summaryCard.highlightCard h3 {
-    color: rgba(255, 255, 255, 0.8);
-  }
-  
-  .summaryCard.highlightCard p, 
-  .summaryCard.highlightCard p span {
-    color: #fff;
-  }
-  
-  
-  /* --- Default card text styles --- */
-  .summaryCard h3 {
-    color: var(--text-secondary);
-    font-weight: 500;
-    margin-bottom: var(--spacing-unit);
-  }
-  
-  .summaryCard p {
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-  
-  .summaryCard p span {
-    color: var(--accent-primary);
-  }
-  
-  .summaryCard p .negative {
-    color: var(--danger-color);
-  }
-  
-  /* --- New styles for the Progress Bar --- */
-  .progressContainer {
-    width: 100%;
-    background-color: var(--bg-secondary);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 4px;
-    border: 1px solid var(--border-color);
-  }
-  .progressBar {
-    height: 24px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-hover));
-    border-radius: 8px;
-    transition: width 0.5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center the text */
-    color: white;
-    font-weight: 600;
-    font-size: 0.8rem;
-    min-width: 40px; /* Ensures text is visible even at 0% */
-  }
-  .progressBar span {
-      display: block;
-  }
-  .progressText { /* No longer needed */
-    display: none;
-  }
-  
-  /* --- New styles for the Recent Intakes list --- */
-  .recentActivity {
-    background-color: var(--bg-secondary);
-    padding: calc(var(--spacing-unit) * 3);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
-  }
-  
-  .recentActivity h3 {
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    font-weight: 600;
-    padding-bottom: var(--spacing-unit);
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .recentList {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .recentList li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: calc(var(--spacing-unit) * 1.5) 0;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .recentList li:last-child {
-      border-bottom: none;
-  }
-  
-  .itemDetails {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--spacing-unit) * 1.5);
-  }
-  
-  .itemIcon {
-    font-size: 1.5rem;
-    background-color: var(--bg-primary);
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-  
-  .itemName {
-    font-weight: 500;
-    display: block;
-  }
-  
-  .itemCategory {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-  }
-  
-  .itemCalories {
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  
-  .noActivity {
-    color: var(--text-secondary);
-    text-align: center;
-    padding: calc(var(--spacing-unit) * 2);
-  }
-  .noActivity a {
-    color: var(--accent-primary);
-    text-decoration: none;
-    font-weight: 500;
-  }
+.summaryCard h3 {
+color: var(--text-secondary);
+font-weight: 500;
+margin-bottom: var(--spacing-unit);
+font-size: 0.9rem;
+}
+
+.summaryCard p {
+font-size: 2rem;
+font-weight: 700;
+}
+
+.summaryCard p span {
+color: var(--accent-primary);
+}
+
+.progressContainer {
+width: 100%;
+background-color: var(--bg-secondary);
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+padding: 4px;
+border: 1px solid var(--border-color);
+}
+.progressBar {
+height: 24px;
+background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-hover));
+border-radius: 8px;
+transition: width 0.5s ease-in-out;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-weight: 600;
+font-size: 0.8rem;
+min-width: 40px;
+}
+
+.recentActivity {
+background-color: var(--bg-secondary);
+padding: calc(var(--spacing-unit) * 3);
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+border: 1px solid var(--border-color);
+}
+
+.recentActivity h3 {
+margin-bottom: calc(var(--spacing-unit) * 2);
+font-weight: 600;
+padding-bottom: var(--spacing-unit);
+border-bottom: 1px solid var(--border-color);
+}
+
+.recentList {
+list-style-type: none;
+display: flex;
+flex-direction: column;
+}
+
+.recentList li {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: calc(var(--spacing-unit) * 1.5) 0;
+border-bottom: 1px solid var(--border-color);
+}
+.recentList li:last-child {
+border-bottom: none;
+}
+
+.itemDetails {
+display: flex;
+align-items: center;
+gap: calc(var(--spacing-unit) * 1.5);
+}
+
+.itemIcon {
+font-size: 1.5rem;
+background-color: var(--bg-primary);
+width: 44px;
+height: 44px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+}
+
+.itemName {
+font-weight: 500;
+display: block;
+}
+
+.itemCategory {
+font-size: 0.8rem;
+color: var(--text-secondary);
+}
+
+/* UPDATED: Styles for detailed macro display */
+.itemMacros {
+display: flex;
+align-items: center;
+gap: var(--spacing-unit) * 2;
+font-size: 0.9rem;
+text-align: right;
+}
+
+.itemMacros span {
+color: var(--text-secondary);
+min-width: 50px;
+}
+
+.itemMacros strong {
+color: var(--text-primary);
+font-weight: 600;
+min-width: 70px;
+}
+
+.noActivity {
+color: var(--text-secondary);
+text-align: center;
+padding: calc(var(--spacing-unit) * 2);
+}
+.noActivity a {
+color: var(--accent-primary);
+text-decoration: none;
+font-weight: 500;
+}

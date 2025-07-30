@@ -1,9 +1,7 @@
 const router = require('express').Router();
 let Intake = require('../models/Intake.js');
 
-// --- API Endpoints ---
-
-// GET: Fetch all intake entries, sorted by date
+// GET: Fetch all intake entries
 router.route('/').get((req, res) => {
   Intake.find()
     .sort({ date: -1 })
@@ -13,12 +11,15 @@ router.route('/').get((req, res) => {
 
 // POST: Add a new intake entry
 router.route('/add').post((req, res) => {
-  const { foodItem, quantity, calories, category, date } = req.body;
+  const { foodItem, quantity, calories, protein, carbs, fats, category, date } = req.body;
 
   const newIntake = new Intake({
     foodItem,
     quantity,
     calories: Number(calories),
+    protein: Number(protein),
+    carbs: Number(carbs),     // ADDED
+    fats: Number(fats),       // ADDED
     category,
     date: Date.parse(date),
   });
@@ -37,17 +38,21 @@ router.route('/:id').delete((req, res) => {
 
 // PUT: Update an intake entry by its ID
 router.route('/:id').put((req, res) => {
-    const { foodItem, quantity, calories, category, date } = req.body;
+    const { foodItem, quantity, calories, protein, carbs, fats, category, date } = req.body;
   
     Intake.findByIdAndUpdate(req.params.id, {
       foodItem,
       quantity,
       calories: Number(calories),
+      protein: Number(protein),
+      carbs: Number(carbs),     // ADDED
+      fats: Number(fats),       // ADDED
       category,
       date: Date.parse(date),
     }, { new: true })
       .then(updatedIntake => res.json(updatedIntake))
       .catch(err => res.status(400).json('Error: ' + err));
-});
+  });
+
 
 module.exports = router;

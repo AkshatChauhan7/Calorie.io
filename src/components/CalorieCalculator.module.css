@@ -125,29 +125,25 @@
   font-size: 1rem;
 }
 
-/* --- NEW STYLES FOR DUAL RESULT DISPLAY --- */
-.result {
-  display: flex;
-  align-items: center;
+/* --- UPDATED: Styles for 2x2 Macro Grid --- */
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--spacing-unit) * 2);
   text-align: center;
-  border-radius: 16px;
-  transition: all 0.3s ease;
   background: linear-gradient(145deg, #18233f, #1e2a4c);
   box-shadow: 5px 5px 10px #141d34, -5px -5px 10px #223156;
   padding: calc(var(--spacing-unit) * 2);
+  border-radius: 16px;
 }
-[data-theme='light'] .result {
+[data-theme='light'] .resultGrid {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
 }
 
-.resultItem {
-    flex: 1;
-}
-
 .resultItem p {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   margin: 0 0 4px 0;
   text-transform: uppercase;
@@ -155,7 +151,7 @@
 }
 
 .value {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.1;
@@ -163,17 +159,9 @@
 }
 
 .unit {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-secondary);
-  margin-left: var(--spacing-unit);
+  margin-left: calc(var(--spacing-unit) / 2);
   display: inline-block;
-}
-
-.divider {
-    width: 2px;
-    align-self: stretch;
-    background-color: var(--border-color);
-    border-radius: 2px;
-    margin: -8px 8px; /* Adjust margin to fit nicely */
 }

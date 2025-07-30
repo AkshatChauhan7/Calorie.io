@@ -1,20 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { calculateTodaysCalories } from '../utils/helpers';
+import { 
+  calculateTodaysCalories, 
+  calculateTodaysProtein,
+  calculateTodaysCarbs,
+  calculateTodaysFats
+} from '../utils/helpers';
 import styles from './Dashboard.module.css';
 
-// Helper object to map categories to icons
 const mealIcons = {
-  Breakfast: '🥞',
-  Lunch: '🥗',
-  Dinner: '🍛',
-  Snack: '🍎',
+  Breakfast: '🥞', Lunch: '🥗', Dinner: '🍛', Snack: '🍎',
 };
 
 const Dashboard = ({ intakeList, calorieGoal }) => {
   const todaysCalories = calculateTodaysCalories(intakeList);
-  const remainingCalories = calorieGoal - todaysCalories;
-  const progress = Math.min((todaysCalories / calorieGoal) * 100, 100);
+  const todaysProtein = calculateTodaysProtein(intakeList);
+  const todaysCarbs = calculateTodaysCarbs(intakeList);
+  const todaysFats = calculateTodaysFats(intakeList);
+  
+  const progress = calorieGoal > 0 ? Math.min((todaysCalories / calorieGoal) * 100, 100) : 0;
 
   const today = new Date().toISOString().slice(0, 10);
   const recentIntakes = intakeList
@@ -31,22 +35,29 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
 
       <div className={styles.summaryGrid}>
         <div className={`${styles.summaryCard} ${styles.highlightCard}`}>
-          <h3>Consumed</h3>
-          <p><span>{todaysCalories}</span> kcal</p>
+          <h3>Calories Consumed</h3>
+          <p><span>{todaysCalories}</span> / {calorieGoal} kcal</p>
         </div>
+        
         <div className={styles.summaryCard}>
-          <h3>Goal</h3>
-          <p><span>{calorieGoal}</span> kcal</p>
+          <h3>Protein</h3>
+          <p><span>{todaysProtein.toFixed(1)}</span> g</p>
         </div>
+
         <div className={styles.summaryCard}>
-          <h3>Remaining</h3>
-          <p><span className={remainingCalories < 0 ? styles.negative : ''}>{remainingCalories}</span> kcal</p>
+          <h3>Carbs</h3>
+          <p><span>{todaysCarbs.toFixed(1)}</span> g</p>
+        </div>
+
+        <div className={styles.summaryCard}>
+          <h3>Fats</h3>
+          <p><span>{todaysFats.toFixed(1)}</span> g</p>
         </div>
       </div>
       
       <div className={styles.progressContainer}>
         <div className={styles.progressBar} style={{ width: `${progress}%` }}>
-          <span>{progress.toFixed(0)}%</span>
+          <span>{progress.toFixed(0)}% of Calorie Goal</span>
         </div>
       </div>
 
@@ -55,7 +66,7 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
         {recentIntakes.length > 0 ? (
           <ul className={styles.recentList}>
             {recentIntakes.map(item => (
-              <li key={item.id}>
+              <li key={item._id}>
                 <div className={styles.itemDetails}>
                   <span className={styles.itemIcon}>{mealIcons[item.category] || '🍽️'}</span>
                   <div>
@@ -63,7 +74,12 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
                     <span className={styles.itemCategory}>{item.category}</span>
                   </div>
                 </div>
-                <span className={styles.itemCalories}>{item.calories} kcal</span>
+                <div className={styles.itemMacros}>
+                    <span>{item.protein || 0}g P</span>
+                    <span>{item.carbs || 0}g C</span>
+                    <span>{item.fats || 0}g F</span>
+                    <strong>{item.calories} kcal</strong>
+                </div>
               </li>
             ))}
           </ul>

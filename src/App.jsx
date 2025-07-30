@@ -7,12 +7,14 @@ import Dashboard from './pages/Dashboard';
 import AddIntake from './pages/AddIntake';
 import History from './pages/History';
 import Profile from './pages/Profile'; 
-import ProteinCalculator from './pages/ProteinCalculator'; // Import the new page
-import { calculateTodaysCalories, calculateCalorieGoal } from './utils/helpers';
+import ProteinCalculator from './pages/ProteinCalculator';
+import { 
+  calculateTodaysCalories, 
+  calculateCalorieGoal 
+} from './utils/helpers';
 import styles from './App.module.css';
 
 const App = () => {
-  // ... (keep all existing state and functions)
   const [intakeList, setIntakeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({
@@ -26,8 +28,11 @@ const App = () => {
   useEffect(() => {
     const loadAppData = async () => {
       try {
-        const intakes = await intakeAPI.getAll();
-        const profile = await profileAPI.get();
+        const [intakes, profile] = await Promise.all([
+          intakeAPI.getAll(),
+          profileAPI.get()
+        ]);
+        
         setIntakeList(intakes);
         if (profile) {
           setUserProfile(profile);
@@ -57,6 +62,7 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // UPDATED: handleSaveItem to include all macros
   const handleSaveItem = async (item) => {
     try {
       setLoading(true);
@@ -64,14 +70,19 @@ const App = () => {
         foodItem: item.foodItem,
         quantity: item.quantity || '',
         calories: Number(item.calories),
+        protein: Number(item.protein || 0),
+        carbs: Number(item.carbs || 0),
+        fats: Number(item.fats || 0),
         category: item.category,
         date: item.id ? item.date : new Date().toISOString()
       };
+
       if (item.id) {
         await intakeAPI.update(item.id, intakeData);
       } else {
         await intakeAPI.add(intakeData);
       }
+      
       const data = await intakeAPI.getAll();
       setIntakeList(data);
       navigate('/history');
@@ -135,7 +146,6 @@ const App = () => {
             <Route path="/add" element={<AddIntake handleSaveItem={handleSaveItem} />} />
             <Route path="/history" element={<History intakeList={intakeList} handleDeleteItem={handleDeleteItem} />} />
             <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />
-            {/* Add the new route */}
             <Route path="/protein" element={<ProteinCalculator />} />
           </Routes>
         </main>
