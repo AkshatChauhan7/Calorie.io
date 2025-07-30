@@ -12,7 +12,6 @@ export const calculateTodaysProtein = (intakeList) => {
     .reduce((total, item) => total + Number(item.protein || 0), 0);
 };
 
-// ADDED: New function to calculate today's total carbs
 export const calculateTodaysCarbs = (intakeList) => {
   const today = new Date().toISOString().slice(0, 10);
   return intakeList
@@ -20,7 +19,6 @@ export const calculateTodaysCarbs = (intakeList) => {
     .reduce((total, item) => total + Number(item.carbs || 0), 0);
 };
 
-// ADDED: New function to calculate today's total fats
 export const calculateTodaysFats = (intakeList) => {
   const today = new Date().toISOString().slice(0, 10);
   return intakeList
@@ -29,7 +27,6 @@ export const calculateTodaysFats = (intakeList) => {
 };
 
 export const calculateCalorieGoal = (profile) => {
-  // ... (this function remains unchanged)
   const { age, gender, weight, height, activityLevel, goal } = profile;
   if (!age || !gender || !weight || !height || !activityLevel || !goal) { return 2500; }
   let bmr;
@@ -44,6 +41,55 @@ export const calculateCalorieGoal = (profile) => {
     case 'maintain': default: calorieGoal = tdee; break;
   }
   return Math.round(calorieGoal);
+};
+
+// --- UPDATED MACRO GOAL CALCULATION TO MATCH PROTEIN CALCULATOR LOGIC ---
+export const calculateMacroGoals = (calorieGoal, profile) => {
+  const { weight, activityLevel, goal } = profile;
+
+  if (!weight || !calorieGoal || calorieGoal <= 0) {
+    return { proteinGoal: 0, carbsGoal: 0, fatsGoal: 0 };
+  }
+
+  // 1. Calculate Protein Goal based on the same logic as the Protein Calculator page
+  let proteinMultiplier;
+  // For 'Muscle Gain', the multiplier is highest
+  if (goal === 'gain') {
+    proteinMultiplier = 2.2;
+  } else {
+    // For 'Maintain' or 'Lose', it's based on activity level
+    switch (activityLevel) {
+      case 'sedentary':
+        proteinMultiplier = 0.9;
+        break;
+      case 'light':
+        proteinMultiplier = 1.3;
+        break;
+      case 'moderate':
+        proteinMultiplier = 1.5;
+        break;
+      case 'active':
+        proteinMultiplier = 1.8;
+        break;
+      case 'extra':
+        proteinMultiplier = 2.0;
+        break;
+      default:
+        proteinMultiplier = 1.2;
+    }
+  }
+
+  const proteinGoal = Math.round(weight * proteinMultiplier);
+  const proteinCalories = proteinGoal * 4;
+
+  // 2. Calculate remaining calories for Carbs and Fats
+  const remainingCalories = calorieGoal - proteinCalories;
+
+  // 3. Split remaining calories (e.g., 55% Carbs, 35% Fats)
+  const carbsGoal = Math.round((remainingCalories * 0.55) / 4);
+  const fatsGoal = Math.round((remainingCalories * 0.35) / 9);
+
+  return { proteinGoal, carbsGoal, fatsGoal };
 };
 
 // --- UPDATED FOOD_DATA with all macros ---

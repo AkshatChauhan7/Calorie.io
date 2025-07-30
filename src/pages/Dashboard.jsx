@@ -12,7 +12,7 @@ const mealIcons = {
   Breakfast: '🥞', Lunch: '🥗', Dinner: '🍛', Snack: '🍎',
 };
 
-const Dashboard = ({ intakeList, calorieGoal }) => {
+const Dashboard = ({ intakeList, calorieGoal, proteinGoal, carbsGoal, fatsGoal }) => {
   const todaysCalories = calculateTodaysCalories(intakeList);
   const todaysProtein = calculateTodaysProtein(intakeList);
   const todaysCarbs = calculateTodaysCarbs(intakeList);
@@ -41,17 +41,17 @@ const Dashboard = ({ intakeList, calorieGoal }) => {
         
         <div className={styles.summaryCard}>
           <h3>Protein</h3>
-          <p><span>{todaysProtein.toFixed(1)}</span> g</p>
+          <p><span>{todaysProtein.toFixed(1)}</span> / {proteinGoal} g</p>
         </div>
 
         <div className={styles.summaryCard}>
           <h3>Carbs</h3>
-          <p><span>{todaysCarbs.toFixed(1)}</span> g</p>
+          <p><span>{todaysCarbs.toFixed(1)}</span> / {carbsGoal} g</p>
         </div>
 
         <div className={styles.summaryCard}>
           <h3>Fats</h3>
-          <p><span>{todaysFats.toFixed(1)}</span> g</p>
+          <p><span>{todaysFats.toFixed(1)}</span> / {fatsGoal} g</p>
         </div>
       </div>
       

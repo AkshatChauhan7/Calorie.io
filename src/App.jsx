@@ -10,7 +10,8 @@ import Profile from './pages/Profile';
 import ProteinCalculator from './pages/ProteinCalculator';
 import { 
   calculateTodaysCalories, 
-  calculateCalorieGoal 
+  calculateCalorieGoal,
+  calculateMacroGoals
 } from './utils/helpers';
 import styles from './App.module.css';
 
@@ -21,6 +22,9 @@ const App = () => {
     age: '', gender: 'female', weight: '', height: '', activityLevel: 'sedentary', goal: 'maintain'
   });
   const [calorieGoal, setCalorieGoal] = useState(2500);
+  const [proteinGoal, setProteinGoal] = useState(188);
+  const [carbsGoal, setCarbsGoal] = useState(250);
+  const [fatsGoal, setFatsGoal] = useState(83);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
   const navigate = useNavigate();
@@ -47,8 +51,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const newGoal = calculateCalorieGoal(userProfile);
-    setCalorieGoal(newGoal);
+    const newCalorieGoal = calculateCalorieGoal(userProfile);
+    setCalorieGoal(newCalorieGoal);
+    
+    const { proteinGoal, carbsGoal, fatsGoal } = calculateMacroGoals(newCalorieGoal, userProfile);
+    setProteinGoal(proteinGoal);
+    setCarbsGoal(carbsGoal);
+    setFatsGoal(fatsGoal);
   }, [userProfile]);
 
   useEffect(() => {
@@ -62,7 +71,6 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // UPDATED: handleSaveItem to include all macros
   const handleSaveItem = async (item) => {
     try {
       setLoading(true);
@@ -142,7 +150,18 @@ const App = () => {
         />
         <main className={styles.pageContent}>
           <Routes>
-            <Route path="/" element={<Dashboard intakeList={intakeList} calorieGoal={calorieGoal} />} />
+            <Route 
+              path="/" 
+              element={
+                <Dashboard 
+                  intakeList={intakeList} 
+                  calorieGoal={calorieGoal} 
+                  proteinGoal={proteinGoal}
+                  carbsGoal={carbsGoal}
+                  fatsGoal={fatsGoal}
+                />
+              } 
+            />
             <Route path="/add" element={<AddIntake handleSaveItem={handleSaveItem} />} />
             <Route path="/history" element={<History intakeList={intakeList} handleDeleteItem={handleDeleteItem} />} />
             <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />

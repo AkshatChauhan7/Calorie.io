@@ -77,7 +77,7 @@ font-size: 0.9rem;
 }
 
 .summaryCard p {
-font-size: 2rem;
+font-size: 1.8rem;
 font-weight: 700;
 }
 
@@ -170,7 +170,7 @@ color: var(--text-secondary);
 .itemMacros {
 display: flex;
 align-items: center;
-gap: var(--spacing-unit) * 2;
+gap: calc(var(--spacing-unit) * 2);
 font-size: 0.9rem;
 text-align: right;
 }
