@@ -1,0 +1,229 @@
+/* Animation for the results card to appear smoothly */
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Main container with a responsive grid layout */
+  .container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: calc(var(--spacing-unit) * 4);
+    max-width: 950px;
+    margin: 1rem auto;
+  }
+  
+  /* Switch to two columns on larger screens */
+  @media (min-width: 820px) {
+    .container {
+      grid-template-columns: 3fr 4fr;
+    }
+  }
+  
+  /* Base styles for both the form and result cards */
+  .formCard, .resultsCard {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: calc(var(--spacing-unit) * 4);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+  }
+  
+  /* Hide the results card initially for the animation */
+  .resultsCard {
+    opacity: 0;
+  }
+  
+  .resultsCard.resultsVisible {
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-unit);
+  }
+  
+  .subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+  }
+  
+  .formGroup label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+    margin-bottom: var(--spacing-unit);
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.75);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .formGroup input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  .calculateButton {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.75);
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-hover));
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: calc(var(--spacing-unit) * 2);
+  }
+  
+  .calculateButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
+  
+  /* --- Gauge Styles --- */
+  .gaugeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+  }
+  
+  .gauge {
+    width: 250px;
+    height: 125px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .gaugeFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 125px 125px 0 0;
+    background: conic-gradient(from -90deg, #e74c3c, #f1c40f, #2ecc71 45%, #f1c40f 65%, #e74c3c);
+  }
+  
+  .gaugeCover {
+    width: 190px;
+    height: 95px;
+    background-color: var(--bg-secondary);
+    border-radius: 125px 125px 0 0;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: calc(var(--spacing-unit) * 1.5);
+  }
+  
+  .bmiValue {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  
+  .bmiLabel {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  
+  .bmiPlaceholder {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+  
+  .needle {
+    width: 3px;
+    height: 85px;
+    background: var(--text-primary);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform-origin: bottom;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 3px;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+  }
+  
+  .needle::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: var(--text-primary);
+    border: 3px solid var(--bg-secondary);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -6px;
+    left: -4.5px;
+  }
+  
+  /* --- Info Box --- */
+  .infoBox {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+    background-color: var(--bg-primary);
+    padding: calc(var(--spacing-unit) * 2.5);
+    border-radius: 12px;
+    border-left: 5px solid var(--border-color);
+    transition: border-color 0.5s ease;
+  }
+  
+  .infoIcon {
+    font-size: 2rem;
+    min-width: 40px;
+    text-align: center;
+  }
+  
+  .infoText h4 {
+    font-size: 1.1rem;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+  }
+  
+  .infoText p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  /* Category-specific colors for the info box */
+  .infoBox.Severelyunderweight { border-color: #c0392b; }
+  .infoBox.Moderatelyunderweight { border-color: #e67e22; }
+  .infoBox.Mildlyunderweight { border-color: #f39c12; }
+  .infoBox.Normal { border-color: #2ecc71; }
+  .infoBox.Overweight { border-color: #f1c40f; }
+  .infoBox.ObeseClassI { border-color: #e67e22; }
+  .infoBox.ObeseClassII { border-color: #d35400; }
+  .infoBox.ObeseClassIII { border-color: #c0392b; }
+  

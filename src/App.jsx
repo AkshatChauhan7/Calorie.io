@@ -8,6 +8,7 @@ import AddIntake from './pages/AddIntake';
 import History from './pages/History';
 import Profile from './pages/Profile'; 
 import ProteinCalculator from './pages/ProteinCalculator';
+import BmiCalculator from './pages/BMICalculator';
 import { 
   calculateTodaysCalories, 
   calculateCalorieGoal,
@@ -166,6 +167,7 @@ const App = () => {
             <Route path="/history" element={<History intakeList={intakeList} handleDeleteItem={handleDeleteItem} />} />
             <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />
             <Route path="/protein" element={<ProteinCalculator />} />
+            <Route path="/bmi" element={<BmiCalculator />} />
           </Routes>
         </main>
       </div>
