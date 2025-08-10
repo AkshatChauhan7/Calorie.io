@@ -1,7 +1,6 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
 export const intakeAPI = {
-  // ... (keep all existing intakeAPI functions)
   getAll: async () => {
     const response = await fetch(`${API_BASE_URL}/intakes`);
     if (!response.ok) throw new Error('Failed to fetch intakes');
@@ -35,7 +34,6 @@ export const intakeAPI = {
 };
 
 export const profileAPI = {
-  // ... (keep all existing profileAPI functions)
   get: async () => {
     const response = await fetch(`${API_BASE_URL}/profile`);
     if (!response.ok) throw new Error('Failed to fetch profile');
@@ -66,5 +64,20 @@ export const proteinAPI = {
     });
     if (!response.ok) throw new Error('Failed to log protein');
     return response.json();
+  }
+};
+
+export const clarifaiAPI = {
+  analyzeUpload: async (file) => {
+    const formData = new FormData();
+    formData.append('imageFile', file);
+
+    const res = await fetch('http://localhost:5000/api/clarifai/analyze-upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return await res.json();
   }
 };

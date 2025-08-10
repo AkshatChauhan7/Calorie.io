@@ -1,0 +1,155 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 var(--spacing-unit);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 4);
+}
+
+.analyzerCard, .resultsCard, .errorCard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: calc(var(--spacing-unit) * 4);
+  box-shadow: var(--shadow);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-unit);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.imagePreviewContainer {
+  width: 100%;
+  max-height: 400px;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-primary);
+}
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: var(--spacing-unit);
+  justify-content: center;
+}
+
+.browseButton, .analyzeButton {
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.browseButton {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+.browseButton:hover {
+  background-color: var(--bg-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.analyzeButton {
+  background-color: var(--accent-primary);
+  color: #fff;
+}
+.analyzeButton:hover {
+  background-color: var(--accent-primary-hover);
+}
+.analyzeButton:disabled {
+  background-color: var(--text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.resultsTitle {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  font-weight: 600;
+}
+
+.resultsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resultItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--spacing-unit) * 1.5) var(--spacing-unit);
+  border-bottom: 1px solid var(--border-color);
+  text-transform: capitalize;
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.itemName {
+  font-weight: 500;
+}
+
+.itemConfidence {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.spinner {
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--accent-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorCard {
+  border-left: 5px solid var(--danger-color);
+  text-align: center;
+}
+.errorCard h3 {
+  margin-bottom: var(--spacing-unit);
+  color: var(--danger-color);
+}
+.errorCard p {
+  color: var(--text-secondary);
+}

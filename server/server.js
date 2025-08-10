@@ -1,16 +1,23 @@
 // 1. Import Dependencies
-require('dotenv').config(); 
+require('dotenv').config({ path: __dirname + '/.env' }); // <-- Always load .env from server folder
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// 2. Initialize Express App
+// Debug: log that env is loaded
+console.log("DEBUG: Loaded CLARIFAI_API_KEY =", process.env.CLARIFAI_API_KEY ? "LOADED" : "NOT LOADED");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // 3. Middleware
-app.use(cors()); 
-app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // 4. Connect to MongoDB
 const mongoURI = process.env.MONGO_URI;
@@ -21,18 +28,15 @@ mongoose.connect(mongoURI)
 // 5. API Routes
 const intakeRouter = require('./routes/intakeRoutes');
 const profileRouter = require('./routes/profileRoutes');
-const proteinIntakeRouter = require('./routes/proteinIntakeRoutes'); // Import new router
+const proteinIntakeRouter = require('./routes/proteinIntakeRoutes');
+const clarifaiRouter = require('./routes/clarifaiRoutes');
 
 app.use('/api/intakes', intakeRouter);
 app.use('/api/profile', profileRouter);
-app.use('/api/protein', proteinIntakeRouter); // Use new router
+app.use('/api/protein', proteinIntakeRouter);
+app.use('/api/clarifai', clarifaiRouter);
 
-// 6. Basic Test Route
-app.get('/', (req, res) => {
-  res.send('Hello from the Calorie Tracker Backend!');
-});
-
-// 7. Start the Server
+// 6. Start the Server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });

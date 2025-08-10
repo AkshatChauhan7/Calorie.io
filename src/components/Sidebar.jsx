@@ -25,12 +25,14 @@ const Sidebar = ({ isOpen, setSidebarOpen, handleSaveItem }) => {
             <NavLink to="/profile" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
               <span className={styles.icon}>👤</span> My Profile
             </NavLink>
-            {/* New Link for Protein Calculator */}
             <NavLink to="/protein" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
               <span className={styles.icon}>💪</span> Protein Calculator
             </NavLink>
             <NavLink to="/bmi" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
               <span className={styles.icon}>⚖️</span> BMI Calculator
+            </NavLink>
+            <NavLink to="/analyzer" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
+              <span className={styles.icon}>📸</span> Image Analyzer
             </NavLink>
             
             <button 
