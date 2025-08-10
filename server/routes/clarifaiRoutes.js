@@ -8,7 +8,7 @@ const upload = multer({ storage });
 // Test route to check API key validity
 router.get('/test-key', (req, res) => {
   console.log("DEBUG: Clarifai API Key =", process.env.CLARIFAI_API_KEY);
-  console.log("DEBUG: Clarifai API Key =", process.env.CLARIFAI_API_KEY);
+
   const options = {
     hostname: 'api.clarifai.com',
     path: '/v2/models',
@@ -48,8 +48,8 @@ router.post('/analyze-upload', upload.single('imageFile'), async (req, res) => {
 
   const body = JSON.stringify({
     user_app_id: {
-      user_id: 'clarifai',
-      app_id: 'main'
+      user_id: 'my-id',
+      app_id: 'calorieio-test'
     },
     inputs: [
       {

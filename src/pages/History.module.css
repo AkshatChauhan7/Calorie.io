@@ -1,139 +1,383 @@
+/* Enhanced History Page Styles - Modern SaaS Design */
+
 .historyPage {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 3);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.header {
+  padding: clamp(1rem, 2.5vw, 2rem) 0 clamp(1.5rem, 3vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg, 12px);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  line-height: 1.5;
+  max-width: 60ch;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.dateHeading {
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--text-primary);
+  padding: 1rem 1.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius, 8px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+.dateHeading::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary, var(--accent-primary)));
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.dateHeading:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.intakeCard {
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg, 12px);
+  box-shadow: var(--shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.intakeCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary, var(--accent-primary)));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.intakeCard:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-lg, 0 12px 24px rgba(0, 0, 0, 0.15));
+  border-color: var(--accent-primary);
+}
+
+.intakeCard:hover::before {
+  opacity: 1;
+}
+
+.intakeCard:focus-within {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+.cardContent {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  flex-grow: 1;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary, var(--accent-primary)));
+  color: var(--bg-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.category:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.foodName {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.calories {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calories::after {
+  content: 'kcal';
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.time {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time::before {
+  content: '🕐';
+  font-size: 1em;
+}
+
+.cardActions {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.cardActions button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-primary);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cardActions button:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+}
+
+.cardActions button::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.editButton:hover {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary, var(--accent-primary)));
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.editButton:hover::before {
+  transform: scaleX(1);
+}
+
+.deleteButton:hover {
+  background: linear-gradient(135deg, var(--danger-color, #ef4444), #dc2626);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.deleteButton:hover::before {
+  transform: scaleX(1);
+}
+
+.cardActions button:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.noHistory {
+  text-align: center;
+  padding: clamp(3rem, 6vw, 5rem);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg, 12px);
+  box-shadow: var(--shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--border-color);
+  margin-top: 2rem;
+}
+
+.noHistory h3 {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.noHistory p {
+  color: var(--text-secondary);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.6;
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .historyPage {
+    padding: 1rem;
+    gap: 1.5rem;
   }
   
   .header {
-    padding-bottom: var(--spacing-unit) * 2;
-  }
-  
-  .header h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-  }
-  
-  .header p {
-    color: var(--text-secondary);
-    margin-top: calc(var(--spacing-unit) / 2);
-  }
-  
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 4);
-  }
-  
-  .dateGroup {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 2);
-  }
-  
-  .dateHeading {
-    font-weight: 600;
-    color: var(--text-primary);
-    padding-bottom: var(--spacing-unit);
-    border-bottom: 2px solid var(--accent-primary);
-    align-self: flex-start;
+    padding: 1.5rem;
   }
   
   .cardGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: calc(var(--spacing-unit) * 2.5);
-  }
-  
-  .intakeCard {
-    background-color: var(--bg-secondary);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .intakeCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   
   .cardContent {
-    padding: calc(var(--spacing-unit) * 2);
-  }
-  
-  .category {
-    display: inline-block;
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 20px;
-    margin-bottom: var(--spacing-unit);
-  }
-  
-  .foodName {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: calc(var(--spacing-unit) / 2);
-  }
-  
-  .calories {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-primary);
-    margin-bottom: var(--spacing-unit);
-  }
-  
-  .time {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-  }
-  
-  .cardActions {
-    display: flex;
-    gap: 1px;
-    border-top: 1px solid var(--border-color);
-    overflow: hidden;
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    padding: 1.25rem;
   }
   
   .cardActions button {
-    flex-grow: 1;
-    background-color: var(--bg-secondary);
-    border: none;
-    padding: calc(var(--spacing-unit) * 1.5);
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
-    color: var(--text-primary);
+    padding: 0.875rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardActions {
+    flex-direction: column;
   }
   
-  .editButton:hover {
-    background-color: var(--accent-primary);
-    color: #fff;
+  .cardActions button:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .intakeCard,
+  .dateHeading,
+  .cardActions button,
+  .category {
+    transition: none;
   }
   
-  .deleteButton:hover {
-    background-color: var(--danger-color);
-    color: #fff;
+  .intakeCard:hover {
+    transform: none;
   }
   
-  .noHistory {
-    text-align: center;
-    padding: calc(var(--spacing-unit) * 5);
-    background-color: var(--bg-secondary);
-    border-radius: var(--border-radius);
+  .dateGroup {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .intakeCard {
+    border-width: 2px;
   }
   
-  .noHistory h3 {
-    margin-bottom: var(--spacing-unit);
+  .cardActions button {
+    border-width: 2px;
   }
-  
-  .noHistory p {
-    color: var(--text-secondary);
-  }
+}
+
+/* CSS Variables Fallbacks (define these in your root styles) */
+:root {
+  --spacing-unit: 1rem;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+}

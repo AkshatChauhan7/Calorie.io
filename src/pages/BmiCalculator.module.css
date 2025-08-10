@@ -1,229 +1,496 @@
-/* Animation for the results card to appear smoothly */
+/* Enhanced animations */
 @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Main container with a responsive grid layout */
-  .container {
-    display: grid;
-    grid-template-columns: 1fr; /* Single column on mobile */
-    gap: calc(var(--spacing-unit) * 4);
-    max-width: 950px;
-    margin: 1rem auto;
-  }
-  
-  /* Switch to two columns on larger screens */
-  @media (min-width: 820px) {
-    .container {
-      grid-template-columns: 3fr 4fr;
-    }
-  }
-  
-  /* Base styles for both the form and result cards */
-  .formCard, .resultsCard {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: calc(var(--spacing-unit) * 4);
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-  }
-  
-  /* Hide the results card initially for the animation */
-  .resultsCard {
+  from {
     opacity: 0;
+    transform: translateY(30px) scale(0.95);
   }
-  
-  .resultsCard.resultsVisible {
-    animation: fadeInUp 0.5s ease forwards;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-  
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: var(--shadow-xl), 0 0 20px var(--accent-primary-light);
+  }
+  50% {
+    box-shadow: var(--shadow-2xl), 0 0 30px var(--accent-primary-light);
+  }
+}
+
+@keyframes gaugeGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+  }
+}
+
+/* Main container with enhanced grid */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-4xl);
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 var(--spacing-lg);
+}
+
+@media (min-width: 992px) {
+  .container {
+    grid-template-columns: 1fr 1.2fr;
+  }
+}
+
+/* Enhanced base styles for cards */
+.formCard, .resultsCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-4xl);
+  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.formCard::before,
+.resultsCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+.formCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.resultsCard {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.resultsCard.resultsVisible {
+  animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.resultsCard.resultsVisible:hover {
+  animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             pulseGlow 2s ease-in-out infinite;
+  animation-fill-mode: forwards;
+}
+
+/* Enhanced typography */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-4xl);
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+/* Enhanced form elements */
+.formGroup {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.formGroup label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.formGroup label::before {
+  content: attr(data-icon);
+  background: linear-gradient(135deg, var(--accent-primary-light), var(--accent-secondary-light));
+  color: var(--accent-primary);
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.formGroup:hover label::before {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.formGroup input {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-xs);
+}
+
+.formGroup input:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px var(--accent-primary-light), var(--shadow-md);
+  transform: translateY(-1px);
+  background: var(--bg-primary);
+}
+
+/* Enhanced calculate button */
+.calculateButton {
+  width: 100%;
+  padding: var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.calculateButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left var(--transition-base);
+}
+
+.calculateButton:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.calculateButton:hover::before {
+  left: 100%;
+}
+
+.calculateButton:active {
+  transform: translateY(-1px);
+}
+
+/* Enhanced gauge container - Fixed cursor visibility issue */
+.gaugeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-4xl);
+  padding: var(--spacing-2xl);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: visible;
+}
+
+.gauge {
+  width: 280px;
+  height: 140px;
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+  cursor: default;
+}
+
+.gaugeFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 140px 140px 0 0;
+  background: conic-gradient(
+    from -90deg,
+    #e74c3c 0deg,
+    #f39c12 45deg,
+    #2ecc71 90deg,
+    #f39c12 135deg,
+    #e74c3c 180deg
+  );
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.gauge:hover .gaugeFill {
+  animation: gaugeGlow 2s ease-in-out infinite;
+}
+
+.gaugeCover {
+  width: 210px;
+  height: 105px;
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-primary) 100%);
+  border-radius: 140px 140px 0 0;
+  position: absolute;
+  top: 35px;
+  left: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: var(--spacing-xl);
+  box-shadow: inset var(--shadow-sm), var(--shadow-md);
+  border: 2px solid var(--border-light);
+}
+
+.bmiValue {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bmiLabel {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--bg-secondary);
+  padding: 4px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.bmiPlaceholder {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  opacity: 0.5;
+}
+
+/* Enhanced needle with glow effect - Fixed z-index and cursor issues */
+.needle {
+  width: 4px;
+  height: 95px;
+  background: linear-gradient(to bottom, var(--accent-primary), var(--text-primary));
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom;
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px var(--accent-primary), var(--shadow-md);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.needle::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: var(--accent-primary);
+  border: 4px solid var(--bg-elevated);
+  border-radius: 50%;
+  position: absolute;
+  bottom: -8px;
+  left: -6px;
+  box-shadow: var(--shadow-lg), 0 0 15px var(--accent-primary-light);
+}
+
+/* Enhanced info box with better icon styling */
+.infoBox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border-left: 5px solid var(--border-medium);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.infoBox::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--accent-primary);
+  transition: width var(--transition-base);
+}
+
+.infoBox:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.infoBox:hover::before {
+  width: 8px;
+}
+
+.infoIcon {
+  font-size: 2.5rem;
+  min-width: 60px;
+  height: 60px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.infoBox:hover .infoIcon {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.infoText h4 {
+  font-size: 1.2rem;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.infoText p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Enhanced category-specific colors */
+.infoBox.Severelyunderweight { 
+  border-left-color: #c0392b;
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.Moderatelyunderweight { 
+  border-left-color: #e67e22;
+  background: linear-gradient(135deg, rgba(230, 126, 34, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.Mildlyunderweight { 
+  border-left-color: #f39c12;
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.Normal { 
+  border-left-color: #2ecc71;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.Overweight { 
+  border-left-color: #f1c40f;
+  background: linear-gradient(135deg, rgba(241, 196, 15, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.ObeseClassI { 
+  border-left-color: #e67e22;
+  background: linear-gradient(135deg, rgba(230, 126, 34, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.ObeseClassII { 
+  border-left-color: #d35400;
+  background: linear-gradient(135deg, rgba(211, 84, 0, 0.1) 0%, var(--bg-secondary) 100%);
+}
+.infoBox.ObeseClassIII { 
+  border-left-color: #c0392b;
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.1) 0%, var(--bg-secondary) 100%);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .formCard, .resultsCard {
+    padding: var(--spacing-2xl);
+  }
+
   .title {
     font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: var(--spacing-unit);
   }
-  
-  .subtitle {
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: calc(var(--spacing-unit) * 4);
-  }
-  
-  .formGroup label {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-unit);
-    margin-bottom: var(--spacing-unit);
-    font-weight: 500;
-    color: var(--text-secondary);
-  }
-  
-  .formGroup input {
-    width: 100%;
-    padding: calc(var(--spacing-unit) * 1.75);
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-primary);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.2s ease;
-  }
-  
-  .formGroup input:focus {
-    outline: none;
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-  }
-  
-  .calculateButton {
-    width: 100%;
-    padding: calc(var(--spacing-unit) * 1.75);
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-hover));
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: calc(var(--spacing-unit) * 2);
-  }
-  
-  .calculateButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  }
-  
-  /* --- Gauge Styles --- */
-  .gaugeContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: calc(var(--spacing-unit) * 4);
-  }
-  
+
   .gauge {
-    width: 250px;
-    height: 125px;
-    position: relative;
-    overflow: hidden;
+    width: 240px;
+    height: 120px;
   }
-  
-  .gaugeFill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 125px 125px 0 0;
-    background: conic-gradient(from -90deg, #e74c3c, #f1c40f, #2ecc71 45%, #f1c40f 65%, #e74c3c);
-  }
-  
+
   .gaugeCover {
-    width: 190px;
-    height: 95px;
-    background-color: var(--bg-secondary);
-    border-radius: 125px 125px 0 0;
-    position: absolute;
+    width: 180px;
+    height: 90px;
     top: 30px;
     left: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: calc(var(--spacing-unit) * 1.5);
   }
-  
+
   .bmiValue {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-  
-  .bmiLabel {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-  
-  .bmiPlaceholder {
     font-size: 3rem;
-    font-weight: 700;
-    color: var(--text-secondary);
   }
-  
-  .needle {
-    width: 3px;
-    height: 85px;
-    background: var(--text-primary);
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform-origin: bottom;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    border-radius: 3px;
-    filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
-  }
-  
-  .needle::after {
-    content: '';
-    width: 12px;
-    height: 12px;
-    background: var(--text-primary);
-    border: 3px solid var(--bg-secondary);
-    border-radius: 50%;
-    position: absolute;
-    bottom: -6px;
-    left: -4.5px;
-  }
-  
-  /* --- Info Box --- */
+
   .infoBox {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--spacing-unit) * 2);
-    background-color: var(--bg-primary);
-    padding: calc(var(--spacing-unit) * 2.5);
-    border-radius: 12px;
-    border-left: 5px solid var(--border-color);
-    transition: border-color 0.5s ease;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-lg);
   }
-  
+
   .infoIcon {
     font-size: 2rem;
-    min-width: 40px;
-    text-align: center;
+    min-width: 50px;
+    height: 50px;
   }
-  
-  .infoText h4 {
-    font-size: 1.1rem;
-    margin: 0 0 4px 0;
-    font-weight: 600;
-  }
-  
-  .infoText p {
-    color: var(--text-secondary);
-    line-height: 1.5;
-    font-size: 0.9rem;
-    margin: 0;
-  }
-  
-  /* Category-specific colors for the info box */
-  .infoBox.Severelyunderweight { border-color: #c0392b; }
-  .infoBox.Moderatelyunderweight { border-color: #e67e22; }
-  .infoBox.Mildlyunderweight { border-color: #f39c12; }
-  .infoBox.Normal { border-color: #2ecc71; }
-  .infoBox.Overweight { border-color: #f1c40f; }
-  .infoBox.ObeseClassI { border-color: #e67e22; }
-  .infoBox.ObeseClassII { border-color: #d35400; }
-  .infoBox.ObeseClassIII { border-color: #c0392b; }
-  
+}

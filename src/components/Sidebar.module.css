@@ -1,116 +1,170 @@
 .sidebar {
-  width: 260px;
+  width: var(--sidebar-width);
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
-  padding: calc(var(--spacing-unit) * 2);
-  transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+  padding: 0;
+  transition: transform var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
   z-index: 1000;
+  backdrop-filter: blur(12px);
 }
 
 .sidebarContent {
-display: flex;
-flex-direction: column;
-height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  overflow-y: auto;
 }
 
+/* Logo with modern gradient */
 .logo {
-font-size: 2rem;
-font-weight: 700;
-text-align: center;
-padding: var(--spacing-unit) 0;
-margin-bottom: calc(var(--spacing-unit) * 3);
-background: linear-gradient(90deg, var(--accent-primary), #9b59b6);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 0;
+  margin-bottom: var(--spacing-4xl);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  position: relative;
 }
 
+.logo::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border-radius: var(--radius-full);
+}
+
+/* Navigation */
 .nav {
-display: flex;
-flex-direction: column;
-gap: var(--spacing-unit);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
 }
 
+/* Navigation Links and Buttons */
 .navLink, .calculatorButton {
-display: flex;
-align-items: center;
-gap: calc(var(--spacing-unit) * 1.5);
-padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
-border-radius: var(--border-radius);
-color: var(--text-secondary);
-font-weight: 500;
-transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-position: relative;
-width: 100%;
-background-color: transparent;
-border: none;
-font-size: 1rem;
-font-family: var(--font-main);
-cursor: pointer;
-text-align: left;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  position: relative;
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: var(--font-main);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
 }
 
 .navLink:hover, .calculatorButton:hover {
-background-color: var(--bg-primary);
-color: var(--text-primary);
-transform: translateX(5px);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  transform: translateX(2px);
 }
 
+/* Active state */
 .navLink.active {
-background-color: var(--accent-primary);
-color: #fff;
-font-weight: 600;
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
-.navLink.active::before {
-content: '';
-position: absolute;
-left: 0;
-top: 25%;
-height: 50%;
-width: 4px;
-background-color: #fff;
-border-radius: 0 4px 4px 0;
+[data-theme='dark'] .navLink.active {
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
 }
 
+.navLink.active .icon {
+  transform: scale(1.1);
+}
+
+/* Icons with modern styling */
 .icon {
-font-size: 1.2rem;
-width: 24px;
-text-align: center;
+  font-size: 1.1rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
 }
 
+/* Special styling for Quick Calculator */
+.calculatorButton {
+  margin-top: var(--spacing-lg);
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.calculatorButton:hover {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Mobile overlay */
 .overlay {
-display: none;
+  display: none;
 }
 
+/* Mobile Styles */
 @media (max-width: 768px) {
-.sidebar {
-  transform: translateX(-100%);
-}
-.sidebar.open {
-  transform: translateX(0);
-  box-shadow: var(--shadow);
-}
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
-  display: block;
-}
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .sidebarContent {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
 }
 
+/* Modal title for Quick Calculator */
 .modalTitle {
-text-align: center;
-font-weight: 600;
-margin-bottom: calc(var(--spacing-unit) * 2);
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--text-primary);
 }

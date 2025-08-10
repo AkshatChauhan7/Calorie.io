@@ -2,92 +2,204 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
+  height: var(--navbar-height);
+  padding: 0 var(--spacing-2xl);
+  background: var(--bg-overlay);
+  border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
   z-index: 900;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
+/* Hamburger Menu */
 .hamburger {
-display: none;
-font-size: 1.5rem;
-background: none;
-border: none;
-color: var(--text-primary);
-cursor: pointer;
+  display: none;
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
 }
 
+.hamburger:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Date Display */
 .dateDisplay {
-color: var(--text-secondary);
-font-weight: 500;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
+.dateDisplay::before {
+  content: '📅';
+  font-size: 1rem;
+}
+
+/* Controls Section */
 .controls {
-display: flex;
-align-items: center;
-gap: calc(var(--spacing-unit) * 3);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
 }
 
+/* Calorie Info with modern pill design */
 .calorieInfo {
-font-size: 0.9rem;
-color: var(--text-secondary);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.calorieInfo:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.calorieInfo::before {
+  content: '🔥';
+  font-size: 1rem;
 }
 
 .calorieInfo strong {
-color: var(--text-primary);
-font-weight: 600;
+  color: var(--accent-primary);
+  font-weight: 600;
+  font-family: var(--font-mono);
 }
 
+/* Theme Toggle - Modern Switch Design */
 .themeToggle {
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .themeCheckbox {
-opacity: 0;
-position: absolute;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
 }
 
 .themeLabel {
-width: 50px;
-height: 26px;
-background-color: var(--border-color);
-border-radius: 50px;
-position: relative;
-cursor: pointer;
-display: flex;
-align-items: center;
-transition: background-color 0.3s;
+  width: 52px;
+  height: 28px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-base);
+  padding: 2px;
+}
+
+.themeLabel:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-sm);
 }
 
 .themeSlider {
-content: '';
-position: absolute;
-top: 2px;
-left: 2px;
-width: 22px;
-height: 22px;
-border-radius: 50%;
-background-color: white;
-transition: transform 0.3s ease;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--text-secondary);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.themeSlider::before {
+  content: '☀️';
+  font-size: 0.75rem;
 }
 
 .themeCheckbox:checked + .themeLabel {
-background-color: var(--accent-primary);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .themeCheckbox:checked + .themeLabel .themeSlider {
-transform: translateX(24px);
+  transform: translateX(24px);
+  background: white;
 }
 
+.themeCheckbox:checked + .themeLabel .themeSlider::before {
+  content: '🌙';
+}
+
+/* Focus states */
+.themeCheckbox:focus + .themeLabel {
+  box-shadow: 0 0 0 3px var(--accent-primary-light);
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
-.hamburger {
-  display: block;
+  .navbar {
+    padding: 0 var(--spacing-lg);
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .dateDisplay {
+    display: none;
+  }
+  
+  .controls {
+    gap: var(--spacing-lg);
+  }
+  
+  .calorieInfo {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.8rem;
+  }
+  
+  .themeLabel {
+    width: 44px;
+    height: 24px;
+  }
+  
+  .themeSlider {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .themeCheckbox:checked + .themeLabel .themeSlider {
+    transform: translateX(20px);
+  }
 }
-.dateDisplay {
-  display: none;
-}
+
+@media (max-width: 480px) {
+  .calorieInfo::before {
+    display: none;
+  }
+  
+  .calorieInfo {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
 }
