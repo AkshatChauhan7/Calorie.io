@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import ProteinCalculator from './pages/ProteinCalculator';
 import BmiCalculator from './pages/BmiCalculator';
 import AskGemini from './pages/AskGemini';
+import Progress from './pages/Progress';
 import { 
   calculateTodaysCalories, 
   calculateCalorieGoal,
@@ -170,6 +171,7 @@ const App = () => {
             <Route path="/protein" element={<ProteinCalculator />} />
             <Route path="/bmi" element={<BmiCalculator />} />
             <Route path="/ask-gemini" element={<AskGemini calorieGoal={calorieGoal} />} />
+            <Route path="/progress" element={<Progress intakeList={intakeList} userProfile={userProfile} />} />
           </Routes>
         </main>
       </div>
