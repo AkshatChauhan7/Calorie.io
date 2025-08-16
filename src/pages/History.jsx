@@ -1,19 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './History.module.css';
+import Modal from '../components/Modal'; // Import your Modal component
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown for formatting
 
 const History = ({ intakeList, handleDeleteItem }) => {
   const navigate = useNavigate();
+  // State for managing the modal and its content
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentItemName, setCurrentItemName] = useState('');
 
   const handleEdit = (item) => {
-    navigate('/add', { 
-      state: { 
+    navigate('/add', {
+      state: {
         itemToEdit: {
           ...item,
-          id: item._id // Pass the database ID for editing
+          id: item._id
         }
-      } 
+      }
     });
+  };
+
+  // Function to call the backend and get a healthy swap suggestion
+  const handleSuggestSwap = async (foodItem) => {
+    setCurrentItemName(foodItem);
+    setIsLoading(true);
+    setModalContent('');
+    setModalOpen(true);
+
+    try {
+      const res = await fetch('http://localhost:5000/api/gemini/suggest-swap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ foodItem }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || 'Failed to get a response.');
+      }
+
+      const data = await res.json();
+      setModalContent(data.response);
+    } catch (err) {
+      setModalContent(`Sorry, I couldn't find a swap for "${foodItem}" right now.`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Group intake items by date
@@ -55,9 +90,8 @@ const History = ({ intakeList, handleDeleteItem }) => {
                     </div>
                     <div className={styles.cardActions}>
                       <button onClick={() => handleEdit(item)} className={styles.editButton}>Edit</button>
-                      {/* --- THIS IS THE FIX --- */}
-                      {/* Use item._id to ensure the correct database ID is passed */}
                       <button onClick={() => handleDeleteItem(item._id)} className={styles.deleteButton}>Delete</button>
+                      <button onClick={() => handleSuggestSwap(item.foodItem)} className={styles.swapButton}>Swap</button>
                     </div>
                   </div>
                 ))}
@@ -71,6 +105,21 @@ const History = ({ intakeList, handleDeleteItem }) => {
           <p>Start by adding a new intake from the dashboard or "Add Intake" page.</p>
         </div>
       )}
+
+      {/* Modal for displaying the swap suggestion */}
+      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+        <h3 className={styles.modalTitle}>Healthy Swap for {currentItemName}</h3>
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <div className={styles.spinner}></div>
+            <p>Finding a healthier swap...</p>
+          </div>
+        ) : (
+          <div className={styles.markdownResponse}>
+            <ReactMarkdown>{modalContent}</ReactMarkdown>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

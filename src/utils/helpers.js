@@ -133,5 +133,73 @@ export const FOOD_DATA = {
   'soya_chunks': { name: 'Soya Chunks (Cooked)', caloriesPerUnit: 1.19, proteinPerUnit: 0.16, carbsPerUnit: 0.08, fatsPerUnit: 0.005, unit: 'g' },
   'chickpeas': { name: 'Chickpeas (Cooked)', caloriesPerUnit: 1.64, proteinPerUnit: 0.089, carbsPerUnit: 0.27, fatsPerUnit: 0.026, unit: 'g' },
   'whey_protein': { name: 'Whey Protein (1 scoop)', caloriesPerUnit: 120, proteinPerUnit: 24, carbsPerUnit: 3, fatsPerUnit: 1.5, unit: 'qty' },
-  'atom_whey_protein': { name: 'Atom Whey Protein (1 scoop)', caloriesPerUnit: 120, proteinPerUnit: 27, carbsPerUnit: 2, fatsPerUnit: 1, unit: 'qty' }
+  'atom_whey_protein': { name: 'Atom Whey Protein (1 scoop)', caloriesPerUnit: 120, proteinPerUnit: 27, carbsPerUnit: 2, fatsPerUnit: 1, unit: 'qty' },
+
+  // JUNK FOOD
+  // Sodas & Drinks
+  'coca_cola': { name: 'Coca-Cola (can, 330ml)', caloriesPerUnit: 140, proteinPerUnit: 0, carbsPerUnit: 39, fatsPerUnit: 0, unit: 'qty' },
+  'pepsi': { name: 'Pepsi (can, 330ml)', caloriesPerUnit: 150, proteinPerUnit: 0, carbsPerUnit: 41, fatsPerUnit: 0, unit: 'qty' },
+  'sprite': { name: 'Sprite (can, 330ml)', caloriesPerUnit: 140, proteinPerUnit: 0, carbsPerUnit: 38, fatsPerUnit: 0, unit: 'qty' },
+  'fanta': { name: 'Fanta Orange (can, 330ml)', caloriesPerUnit: 160, proteinPerUnit: 0, carbsPerUnit: 42, fatsPerUnit: 0, unit: 'qty' },
+  'frooti': { name: 'Frooti (200ml)', caloriesPerUnit: 100, proteinPerUnit: 0, carbsPerUnit: 25, fatsPerUnit: 0, unit: 'qty' },
+  'red_bull': { name: 'Red Bull (250ml can)', caloriesPerUnit: 110, proteinPerUnit: 0, carbsPerUnit: 28, fatsPerUnit: 0, unit: 'qty' },
+
+  // Chips & Salty Snacks
+  'lays_classic': { name: "Lay's Classic Chips (small bag, 28g)", caloriesPerUnit: 160, proteinPerUnit: 2, carbsPerUnit: 15, fatsPerUnit: 10, unit: 'qty' },
+  'lays_magic_masala': { name: "Lay's Magic Masala (small bag, 28g)", caloriesPerUnit: 155, proteinPerUnit: 2, carbsPerUnit: 16, fatsPerUnit: 9, unit: 'qty' },
+  'uncle_chipps': { name: 'Uncle Chipps (small bag, 28g)', caloriesPerUnit: 150, proteinPerUnit: 1.8, carbsPerUnit: 16, fatsPerUnit: 9, unit: 'qty' },
+  'kurkure_masala': { name: 'Kurkure Masala Munch (small bag, 28g)', caloriesPerUnit: 150, proteinPerUnit: 2, carbsPerUnit: 18, fatsPerUnit: 8, unit: 'qty' },
+  'bingo_mad_angles': { name: 'Bingo Mad Angles (small bag, 36g)', caloriesPerUnit: 190, proteinPerUnit: 2.5, carbsPerUnit: 22, fatsPerUnit: 10, unit: 'qty' },
+  'pringles_original': { name: 'Pringles Original (10 chips)', caloriesPerUnit: 150, proteinPerUnit: 1, carbsPerUnit: 15, fatsPerUnit: 9, unit: 'qty' },
+  'doritos_nacho_cheese': { name: 'Doritos Nacho Cheese (small bag, 48g)', caloriesPerUnit: 240, proteinPerUnit: 3, carbsPerUnit: 29, fatsPerUnit: 13, unit: 'qty' },
+  'cheetos': { name: 'Cheetos Crunchy (small bag, 28g)', caloriesPerUnit: 160, proteinPerUnit: 2, carbsPerUnit: 15, fatsPerUnit: 10, unit: 'qty' },
+
+  // Chocolates & Candy
+  'dairy_milk': { name: 'Cadbury Dairy Milk (25g bar)', caloriesPerUnit: 130, proteinPerUnit: 2, carbsPerUnit: 15, fatsPerUnit: 7, unit: 'qty' },
+  'kitkat': { name: 'KitKat (4-finger bar)', caloriesPerUnit: 210, proteinPerUnit: 2.7, carbsPerUnit: 27, fatsPerUnit: 11, unit: 'qty' },
+  'snickers': { name: 'Snickers (standard bar)', caloriesPerUnit: 250, proteinPerUnit: 4, carbsPerUnit: 33, fatsPerUnit: 12, unit: 'qty' },
+  'five_star': { name: 'Cadbury 5 Star (22g bar)', caloriesPerUnit: 100, proteinPerUnit: 1, carbsPerUnit: 15, fatsPerUnit: 4, unit: 'qty' },
+  'munch': { name: 'Nestle Munch (10g bar)', caloriesPerUnit: 50, proteinPerUnit: 0.7, carbsPerUnit: 6.8, fatsPerUnit: 2.3, unit: 'qty' },
+  'gems': { name: 'Cadbury Gems (small pack)', caloriesPerUnit: 90, proteinPerUnit: 1, carbsPerUnit: 15, fatsPerUnit: 3, unit: 'qty' },
+
+  // Biscuits & Cookies
+  'oreo_biscuit': { name: 'Oreo Biscuit', caloriesPerUnit: 53, proteinPerUnit: 0.5, carbsPerUnit: 8.3, fatsPerUnit: 2.3, unit: 'qty' },
+  'biscuit_marie': { name: 'Marie Biscuit', caloriesPerUnit: 22, proteinPerUnit: 0.4, carbsPerUnit: 4.5, fatsPerUnit: 0.3, unit: 'qty' },
+  'parle_g': { name: 'Parle-G Biscuit', caloriesPerUnit: 25, proteinPerUnit: 0.4, carbsPerUnit: 4.9, fatsPerUnit: 0.5, unit: 'qty' },
+  'good_day_cashew': { name: 'Good Day Cashew Biscuit', caloriesPerUnit: 45, proteinPerUnit: 0.6, carbsPerUnit: 6, fatsPerUnit: 2, unit: 'qty' },
+  'hide_and_seek': { name: 'Hide & Seek Chocolate Chip Cookie', caloriesPerUnit: 50, proteinPerUnit: 0.6, carbsPerUnit: 6.5, fatsPerUnit: 2.5, unit: 'qty' },
+  'britannia_bourbon': { name: 'Britannia Bourbon Biscuit', caloriesPerUnit: 70, proteinPerUnit: 0.8, carbsPerUnit: 10, fatsPerUnit: 3, unit: 'qty' },
+
+  // Noodles & Street Food
+  'maggi_noodles': { name: 'Maggi Noodles (1 packet, cooked)', caloriesPerUnit: 385, proteinPerUnit: 8, carbsPerUnit: 54, fatsPerUnit: 15, unit: 'qty' },
+  'top_ramen_masala': { name: 'Top Ramen Masala Noodles (1 packet, cooked)', caloriesPerUnit: 350, proteinPerUnit: 7, carbsPerUnit: 50, fatsPerUnit: 13, unit: 'qty' },
+  'samosa': { name: 'Samosa (1 piece)', caloriesPerUnit: 260, proteinPerUnit: 4, carbsPerUnit: 24, fatsPerUnit: 17, unit: 'qty' },
+  'kachori': { name: 'Kachori (1 piece)', caloriesPerUnit: 190, proteinPerUnit: 3, carbsPerUnit: 18, fatsPerUnit: 12, unit: 'qty' },
+  'jalebi': { name: 'Jalebi (1 piece)', caloriesPerUnit: 150, proteinPerUnit: 1, carbsPerUnit: 25, fatsPerUnit: 5, unit: 'qty' },
+  'pani_puri': { name: 'Pani Puri (6 pieces)', caloriesPerUnit: 300, proteinPerUnit: 6, carbsPerUnit: 40, fatsPerUnit: 12, unit: 'qty' },
+  'vada_pav': { name: 'Vada Pav (1 piece)', caloriesPerUnit: 290, proteinPerUnit: 7, carbsPerUnit: 48, fatsPerUnit: 8, unit: 'qty' },
+  'pav_bhaji': { name: 'Pav Bhaji (1 plate)', caloriesPerUnit: 400, proteinPerUnit: 10, carbsPerUnit: 55, fatsPerUnit: 15, unit: 'qty' },
+  
+  // Fast Food
+  'mcaloo_tikki': { name: "McDonald's McAloo Tikki", caloriesPerUnit: 337, proteinPerUnit: 10, carbsPerUnit: 49, fatsPerUnit: 11, unit: 'qty' },
+  'mcveggie': { name: "McDonald's McVeggie", caloriesPerUnit: 427, proteinPerUnit: 13, carbsPerUnit: 53, fatsPerUnit: 18, unit: 'qty' },
+  'mccrispy_chicken': { name: "McDonald's McChicken Burger", caloriesPerUnit: 426, proteinPerUnit: 21, carbsPerUnit: 42, fatsPerUnit: 20, unit: 'qty' },
+  'french_fries_mcd': { name: "McDonald's Fries (medium)", caloriesPerUnit: 320, proteinPerUnit: 4, carbsPerUnit: 42, fatsPerUnit: 15, unit: 'qty' },
+  'dominos_margherita': { name: "Domino's Margherita Pizza (1 slice, regular)", caloriesPerUnit: 186, proteinPerUnit: 8.5, carbsPerUnit: 27, fatsPerUnit: 4.6, unit: 'qty' },
+  'dominos_peppy_paneer': { name: "Domino's Peppy Paneer Pizza (1 slice, regular)", caloriesPerUnit: 250, proteinPerUnit: 11, carbsPerUnit: 29, fatsPerUnit: 10, unit: 'qty' },
+  'pizza_hut_veggie_lover': { name: "Pizza Hut Veggie Lover's (1 slice, medium)", caloriesPerUnit: 240, proteinPerUnit: 10, carbsPerUnit: 29, fatsPerUnit: 9, unit: 'qty' },
+  'kfc_fried_chicken': { name: 'KFC Fried Chicken (1 pc, original)', caloriesPerUnit: 320, proteinPerUnit: 19, carbsPerUnit: 11, fatsPerUnit: 21, unit: 'qty' },
+  'kfc_zinger_burger': { name: 'KFC Zinger Burger', caloriesPerUnit: 460, proteinPerUnit: 22, carbsPerUnit: 45, fatsPerUnit: 21, unit: 'qty' },
+  'subway_veg_delite': { name: 'Subway Veg Delite (6-inch)', caloriesPerUnit: 230, proteinPerUnit: 8, carbsPerUnit: 46, fatsPerUnit: 2.5, unit: 'qty' },
+  'subway_paneer_tikka': { name: 'Subway Paneer Tikka (6-inch)', caloriesPerUnit: 380, proteinPerUnit: 18, carbsPerUnit: 47, fatsPerUnit: 13, unit: 'qty' },
+  
+  // Desserts
+  'ice_cream_vanilla': { name: 'Vanilla Ice Cream (1 scoop)', caloriesPerUnit: 137, proteinPerUnit: 2.3, carbsPerUnit: 15.6, fatsPerUnit: 7.3, unit: 'qty' },
+  'gulab_jamun': { name: 'Gulab Jamun (1 piece)', caloriesPerUnit: 175, proteinPerUnit: 2, carbsPerUnit: 20, fatsPerUnit: 9, unit: 'qty' },
+  'rasgulla': { name: 'Rasgulla (1 piece)', caloriesPerUnit: 140, proteinPerUnit: 4, carbsPerUnit: 30, fatsPerUnit: 0.5, unit: 'qty' },
+  'brownie': { name: 'Chocolate Brownie (1 piece)', caloriesPerUnit: 250, proteinPerUnit: 3, carbsPerUnit: 30, fatsPerUnit: 14, unit: 'qty' },
+  'donut': { name: 'Glazed Donut (1 piece)', caloriesPerUnit: 260, proteinPerUnit: 3, carbsPerUnit: 31, fatsPerUnit: 14, unit: 'qty' },
 };
+
+
+

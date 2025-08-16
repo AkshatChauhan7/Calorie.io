@@ -381,3 +381,12 @@
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
+.swapButton:hover {
+  background: linear-gradient(135deg, #3498db, #2980b9); /* A nice blue gradient */
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.swapButton:hover::before {
+  transform: scaleX(1);
+}
