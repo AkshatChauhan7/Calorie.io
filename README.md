@@ -1,8 +1,8 @@
 # Calorie.io 🥗
 
-**Calorie.io** is a sleek, modern full-stack web application built with the **MERN stack** (MongoDB, Express, React, Node.js) that empowers users to track their daily calorie and macronutrient intake with precision and ease.
+**Calorie.io** is a sleek, modern full-stack web application built with the **MERN stack** (MongoDB, Express, React, Node.js) that empowers users to track their daily calorie and macronutrient intake with precision and ease.  
 
-It personalizes your fitness journey by calculating your daily nutritional goals based on your unique profile—including age, weight, height, activity level, and goals. With an intuitive dashboard, responsive design, and dark/light mode, Calorie.io helps you stay on track toward your health objectives.
+It personalizes your fitness journey by calculating your daily nutritional goals based on your unique profile—including age, weight, height, activity level, and goals. With an **intuitive dashboard**, **responsive design**, and **AI-powered features**, Calorie.io helps you stay on track toward your health objectives.
 
 ---
 
@@ -11,53 +11,57 @@ It personalizes your fitness journey by calculating your daily nutritional goals
 - **Personalized Goals**  
   Automatically calculates your daily calorie, protein, carb, and fat targets based on your profile.
 
-- **Today’s Summary Dashboard**  
-  See a real-time summary of your daily intake vs. your nutritional goals, along with a log of recent entries.
+- **AI-Powered Assistance**  
+  - *Ask Gemini*: Get answers to nutrition and fitness questions.  
+  - *Meal Suggester*: Receive recipe suggestions based on ingredients you have.  
+  - *Healthy Swap*: Find healthier alternatives for your food items directly from your intake history.
 
-- **Detailed Intake Logging**  
-  Easily add new food items with specific values for calories, protein, carbs, and fats.
+- **Interactive Dashboard**  
+  Real-time summary of your daily intake vs. your nutritional goals, plus a log of recent entries.
 
-- **Comprehensive History**  
-  Browse all past entries grouped by date. Edit or delete any item for better tracking.
+- **Visual Progress Tracking**  
+  View your calorie and macronutrient trends over time with interactive charts.
 
-- **Quick Calculator**  
-  Instantly calculate nutritional values for common food items in a modal and add them directly to your tracker.
+- **Comprehensive Intake History**  
+  Browse all past entries grouped by date, with options to edit or delete items for accurate tracking.
 
-- **Protein Calculator Tool**  
-  A separate section to estimate your ideal daily protein intake based on your age, height, weight, gender, and diet type.
+- **Health Calculators**  
+  - *Quick Calculator*: Instantly calculate nutritional values for common food items and add them directly to your tracker.  
+  - *Protein Calculator*: Estimate your ideal daily protein intake.  
+  - *BMI Calculator*: Calculate and visualize your Body Mass Index with an interactive gauge.  
 
 - **Responsive Design & Theming**  
-  Fully responsive UI with a collapsible sidebar, dark/light theme toggle, and smooth UX across all devices.
+  Fully responsive UI with a collapsible sidebar and a dark/light theme toggle for a seamless experience on any device.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React**
-- **Vite**
-- **React Router**
-- **CSS Modules + Global CSS (with theming variables)**
+- ⚛️ **React** – JavaScript library for building user interfaces  
+- ⚡ **Vite** – Modern frontend build tool  
+- 🔀 **React Router** – Declarative routing  
+- 📊 **Chart.js** – Beautiful and interactive data visualizations  
+- 🎨 **CSS Modules** – Locally scoped CSS for style isolation  
 
 ### Backend
-- **Node.js**
-- **Express**
-
-### Database
-- **MongoDB**
-- **Mongoose ODM**
+- 🟢 **Node.js** – JavaScript runtime  
+- 🚀 **Express** – Minimal and flexible web framework  
+- 🍃 **MongoDB** – Document-oriented database  
+- 🔗 **Mongoose** – ODM for MongoDB and Node.js  
+- 🤖 **Gemini API** – AI-powered meal suggestions and nutritional advice  
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js & npm installed
-- MongoDB running locally or via Atlas
+- [Node.js](https://nodejs.org/) & npm installed  
+- [MongoDB](https://www.mongodb.com/) running locally or via Atlas  
 
 ### Installation
 
-1. Clone the repository:
+ **Clone the repository**  
    ```bash
    git clone https://github.com/your-username/calorie.io.git
    cd calorie.io
