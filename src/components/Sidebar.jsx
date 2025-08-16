@@ -31,8 +31,8 @@ const Sidebar = ({ isOpen, setSidebarOpen, handleSaveItem }) => {
             <NavLink to="/bmi" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
               <span className={styles.icon}>⚖️</span> BMI Calculator
             </NavLink>
-            <NavLink to="/analyzer" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
-              <span className={styles.icon}>📸</span> Image Analyzer
+            <NavLink to="/ask-gemini" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
+              <span className={styles.icon}>🤖</span> Ask Gemini
             </NavLink>
             
             <button 

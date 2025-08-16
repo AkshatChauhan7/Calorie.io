@@ -66,18 +66,3 @@ export const proteinAPI = {
     return response.json();
   }
 };
-
-export const clarifaiAPI = {
-  analyzeUpload: async (file) => {
-    const formData = new FormData();
-    formData.append('imageFile', file);
-
-    const res = await fetch('http://localhost:5000/api/clarifai/analyze-upload', {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    return await res.json();
-  }
-};
