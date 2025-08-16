@@ -1,11 +1,20 @@
 import React from 'react';
 import { Line, Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import styles from './Progress.module.css';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
+// Register the 'Filler' plugin for gradient backgrounds
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler);
 
-const Progress = ({ intakeList }) => {
+// A helper function to create the gradient for the line chart
+const createGradient = (ctx, area) => {
+  const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
+  gradient.addColorStop(0, 'rgba(16, 185, 129, 0)');
+  gradient.addColorStop(1, 'rgba(16, 185, 129, 0.3)');
+  return gradient;
+};
+
+const Progress = ({ intakeList, theme }) => {
   const last7Days = [...Array(7)].map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - i);
@@ -13,7 +22,7 @@ const Progress = ({ intakeList }) => {
   }).reverse();
 
   const calorieData = {
-    labels: last7Days.map(date => new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+    labels: last7Days.map(date => new Date(date).toLocaleString('en-US', { month: 'short', day: 'numeric' })),
     datasets: [{
       label: 'Calories Consumed',
       data: last7Days.map(date =>
@@ -21,11 +30,23 @@ const Progress = ({ intakeList }) => {
           .filter(item => item.date.slice(0, 10) === date)
           .reduce((sum, item) => sum + item.calories, 0)
       ),
-      borderColor: 'rgba(16, 185, 129, 1)',
-      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+      borderColor: '#10b981',
+      backgroundColor: (context) => {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) {
+          return null; // Return null if chartArea is not defined
+        }
+        return createGradient(ctx, chartArea);
+      },
       fill: true,
-      tension: 0.3,
-      borderWidth: 2,
+      tension: 0.4, // Smoother curve
+      borderWidth: 2.5,
+      pointBackgroundColor: '#10b981',
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: '#ffffff',
+      pointHoverBorderColor: '#10b981',
+      pointHoverBorderWidth: 2,
     }]
   };
 
@@ -40,10 +61,16 @@ const Progress = ({ intakeList }) => {
     datasets: [{
       data: [totalProtein, totalCarbs, totalFats],
       backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
-      borderColor: 'var(--bg-secondary)',
-      borderWidth: 3,
+      borderWidth: 0,
+      hoverOffset: 12,
+      hoverBorderColor: theme === 'dark' ? '#0f0f23' : '#ffffff', // Use theme color for hover border
+      hoverBorderWidth: 4,
     }]
   };
+  
+  const textColor = theme === 'dark' ? '#f1f5f9' : '#1a1d29';
+  const gridColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+  const tooltipColor = theme === 'dark' ? '#1e1f47' : '#ffffff';
 
   const commonOptions = {
     responsive: true,
@@ -52,26 +79,38 @@ const Progress = ({ intakeList }) => {
       legend: {
         position: 'bottom',
         labels: {
-          color: 'var(--text-secondary)',
-          padding: 15,
-          font: { size: 12 }
+          color: textColor,
+          padding: 20,
+          font: { size: 13, weight: '500' },
+          usePointStyle: true,
+          pointStyle: 'rectRounded'
         }
       },
       title: {
         display: true,
         text: 'Chart Title',
-        color: 'var(--text-primary)',
-        font: { size: 16, weight: '600' },
-        padding: { bottom: 20 }
+        color: textColor,
+        font: { size: 18, weight: '600' },
+        padding: { bottom: 25 }
+      },
+      tooltip: {
+        backgroundColor: tooltipColor,
+        titleColor: textColor,
+        bodyColor: textColor,
+        titleFont: { weight: 'bold' },
+        bodyFont: { size: 13 },
+        padding: 12,
+        cornerRadius: 8,
+        boxPadding: 4,
       }
     },
     scales: {
       y: {
-        ticks: { color: 'var(--text-secondary)' },
-        grid: { color: 'var(--border-light)' }
+        ticks: { color: textColor, font: {size: 13}},
+        grid: { color: gridColor, drawBorder: false }
       },
       x: {
-        ticks: { color: 'var(--text-secondary)' },
+        ticks: { color: textColor, font: {size: 13} },
         grid: { display: false }
       }
     }
@@ -96,7 +135,9 @@ const Progress = ({ intakeList }) => {
             {todaysIntake.length > 0 ? (
               <Doughnut options={{...commonOptions, scales: {}, plugins: {...commonOptions.plugins, title: {...commonOptions.plugins.title, text: "Today's Macronutrients"}}}} data={macroData} />
             ) : (
-              <p className={styles.noDataText}>Log an intake to see today's macro distribution.</p>
+              <div className={styles.noDataContainer}>
+                <p className={styles.noDataText}>Log an intake to see today's macro distribution.</p>
+              </div>
             )}
           </div>
         </div>

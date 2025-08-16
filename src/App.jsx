@@ -171,7 +171,7 @@ const App = () => {
             <Route path="/protein" element={<ProteinCalculator />} />
             <Route path="/bmi" element={<BmiCalculator />} />
             <Route path="/ask-gemini" element={<AskGemini calorieGoal={calorieGoal} />} />
-            <Route path="/progress" element={<Progress intakeList={intakeList} userProfile={userProfile} />} />
+            <Route path="/progress" element={<Progress intakeList={intakeList} userProfile={userProfile} theme={theme} />} />
           </Routes>
         </main>
       </div>
