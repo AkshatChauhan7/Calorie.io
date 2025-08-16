@@ -63,5 +63,5 @@ It personalizes your fitness journey by calculating your daily nutritional goals
 
  **Clone the repository**  
    ```bash
-   git clone https://github.com/your-username/calorie.io.git
+   git clone https://github.com/AkshatChauhan7/calorie.io.git
    cd calorie.io
