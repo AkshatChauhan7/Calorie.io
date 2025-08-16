@@ -169,7 +169,7 @@ const App = () => {
             <Route path="/profile" element={<Profile userProfile={userProfile} handleProfileUpdate={handleProfileUpdate} />} />
             <Route path="/protein" element={<ProteinCalculator />} />
             <Route path="/bmi" element={<BmiCalculator />} />
-            <Route path="/ask-gemini" element={<AskGemini />} />
+            <Route path="/ask-gemini" element={<AskGemini calorieGoal={calorieGoal} />} />
           </Routes>
         </main>
       </div>
