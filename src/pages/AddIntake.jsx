@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { foodSearchAPI } from '../services/api';
 import styles from './AddIntake.module.css';
 
 const AddIntake = ({ handleSaveItem }) => {
@@ -10,14 +11,18 @@ const AddIntake = ({ handleSaveItem }) => {
   const [formData, setFormData] = useState({
     id: null,
     foodItem: '',
-    quantity: '',
+    quantity: '100',
     calories: '',
     protein: '',
-    carbs: '',   // ADDED
-    fats: '',    // ADDED
+    carbs: '',
+    fats: '',
     category: 'Snack',
     date: null
   });
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     if (itemToEdit) {
@@ -27,13 +32,49 @@ const AddIntake = ({ handleSaveItem }) => {
         quantity: itemToEdit.quantity,
         calories: itemToEdit.calories,
         protein: itemToEdit.protein || '',
-        carbs: itemToEdit.carbs || '',     // ADDED
-        fats: itemToEdit.fats || '',       // ADDED
+        carbs: itemToEdit.carbs || '',
+        fats: itemToEdit.fats || '',
         category: itemToEdit.category,
         date: itemToEdit.date
       });
+      setSearchTerm(itemToEdit.foodItem);
     }
   }, [itemToEdit]);
+  
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchTerm.length > 2) {
+        setIsSearching(true);
+        try {
+          const results = await foodSearchAPI.search(searchTerm);
+          setSearchResults(results);
+        } catch (error) {
+          console.error("Search failed:", error);
+          setSearchResults([]);
+        } finally {
+          setIsSearching(false);
+        }
+      } else {
+        setSearchResults([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  const handleSelectFood = (food) => {
+    setFormData(prev => ({
+      ...prev,
+      foodItem: food.name,
+      // Values are per 100g, quantity is 100 by default
+      calories: food.calories,
+      protein: food.protein,
+      carbs: food.carbs,
+      fats: food.fats,
+    }));
+    setSearchTerm(food.name);
+    setSearchResults([]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,11 +83,7 @@ const AddIntake = ({ handleSaveItem }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.foodItem || !formData.calories) {
-      alert('Please fill in at least the food item and calories.');
-      return;
-    }
-    handleSaveItem(formData);
+    handleSaveItem({ ...formData, foodItem: searchTerm });
   };
 
   return (
@@ -60,12 +97,32 @@ const AddIntake = ({ handleSaveItem }) => {
         <div className={styles.formGrid}>
           <div className={`${styles.formGroup} ${styles.fullWidth}`}>
             <label htmlFor="foodItem">Food Item</label>
-            <input type="text" id="foodItem" name="foodItem" value={formData.foodItem} onChange={handleChange} required />
+            <div className={styles.searchInputContainer}>
+              <input
+                type="text"
+                id="foodItem"
+                name="foodItem"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                required
+                autoComplete="off"
+              />
+              {isSearching && <div className={styles.spinner}></div>}
+              {searchResults.length > 0 && (
+                <ul className={styles.searchResults}>
+                  {searchResults.map(food => (
+                    <li key={food.id} onClick={() => handleSelectFood(food)}>
+                      {food.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="quantity">Quantity</label>
-            <input type="text" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} />
+            <label htmlFor="quantity">Quantity (g)</label>
+            <input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} />
           </div>
           
           <div className={styles.formGroup}>
@@ -79,7 +136,7 @@ const AddIntake = ({ handleSaveItem }) => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="calories">Calories</label>
+            <label htmlFor="calories">Calories (kcal)</label>
             <input type="number" id="calories" name="calories" value={formData.calories} onChange={handleChange} required />
           </div>
 
@@ -88,7 +145,6 @@ const AddIntake = ({ handleSaveItem }) => {
             <input type="number" id="protein" name="protein" value={formData.protein} onChange={handleChange} />
           </div>
 
-          {/* ADDED: Carbs and Fats Input Fields */}
           <div className={styles.formGroup}>
             <label htmlFor="carbs">Carbs (g)</label>
             <input type="number" id="carbs" name="carbs" value={formData.carbs} onChange={handleChange} />

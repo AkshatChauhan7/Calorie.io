@@ -66,3 +66,45 @@ export const proteinAPI = {
     return response.json();
   }
 };
+
+export const recipeAPI = {
+    getAll: async () => {
+      const response = await fetch(`${API_BASE_URL}/recipes`);
+      if (!response.ok) throw new Error('Failed to fetch recipes');
+      return response.json();
+    },
+    add: async (recipe) => {
+      const response = await fetch(`${API_BASE_URL}/recipes/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipe)
+      });
+      if (!response.ok) throw new Error('Failed to add recipe');
+      return response.json();
+    },
+    delete: async (id) => {
+      const response = await fetch(`${API_BASE_URL}/recipes/${id}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) throw new Error('Failed to delete recipe');
+      return response.json();
+    }
+};
+
+export const foodSearchAPI = {
+    search: async (query) => {
+      const response = await fetch(`${API_BASE_URL}/food-search?query=${encodeURIComponent(query)}`);
+      if (!response.ok) throw new Error('Failed to search for food');
+      return response.json();
+    }
+};
+
+export const triviaAPI = {
+  getFact: async () => {
+    const response = await fetch(`${API_BASE_URL}/gemini/trivia-fact`, {
+      method: 'POST'
+    });
+    if (!response.ok) throw new Error('Failed to fetch trivia fact');
+    return response.json();
+  }
+};

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const https = require('https');
 
-// This route handles general text-based questions
+// Handles general text-based questions for the "Ask Gemini" page
 router.post('/ask', (req, res) => {
   const { prompt } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
@@ -64,7 +64,7 @@ router.post('/ask', (req, res) => {
   geminiReq.end();
 });
 
-// This route handles meal suggestions
+// Handles meal suggestions for the "Ask Gemini" page
 router.post('/suggest-meal', (req, res) => {
   const { ingredients, calorieGoal } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
@@ -128,7 +128,7 @@ router.post('/suggest-meal', (req, res) => {
   geminiReq.end();
 });
 
-// --- NEW ROUTE FOR HEALTHY SWAPS ---
+// Handles healthy swap suggestions from the "History" page
 router.post('/suggest-swap', (req, res) => {
   const { foodItem } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
@@ -172,6 +172,70 @@ router.post('/suggest-swap', (req, res) => {
           return res.status(500).json({ error: 'Could not find response text in Gemini API output.' });
         }
         res.json({ response: responseText });
+      } catch (error) {
+        res.status(500).json({ error: 'Error parsing Gemini response' });
+      }
+    });
+  });
+  
+  geminiReq.on('error', (error) => {
+    res.status(500).json({ error: error.message });
+  });
+
+  geminiReq.write(data);
+  geminiReq.end();
+});
+
+// --- DYNAMIC TRIVIA FACT ROUTE (UPDATED) ---
+router.post('/trivia-fact', (req, res) => {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    return res.status(500).json({ error: 'Gemini API key not configured.' });
+  }
+
+  // --- CHANGE 1: Add a list of random topics ---
+  const topics = [
+    'the benefits of hydration', 'surprising vegetable nutrition', 'fruit facts',
+    'the science of exercise', 'the history of a common food', 'vitamins and minerals',
+    'healthy fats', 'the benefits of fiber', 'the human metabolism', 'unusual spices',
+    'the history of pizza', 'the origin of coffee', 'facts about sleep and health'
+  ];
+  // --- Select a random topic from the list ---
+  const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+
+  // --- CHANGE 2: Inject the random topic into the prompt ---
+  const prompt = `
+    Tell me a surprising and fun fact about ${randomTopic}.
+    Keep it concise (around 1-3 sentences) and easy to read.
+    Start directly with the fact, without any introductory phrases like "Here's a fun fact:".
+  `;
+
+  const data = JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }]
+  });
+
+  const options = {
+    hostname: 'generativelanguage.googleapis.com',
+    path: `/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': data.length
+    }
+  };
+
+  const geminiReq = https.request(options, (geminiRes) => {
+    let responseData = '';
+    geminiRes.on('data', (chunk) => { responseData += chunk; });
+    geminiRes.on('end', () => {
+      try {
+        const parsedData = JSON.parse(responseData);
+        if (geminiRes.statusCode !== 200 || parsedData.error) {
+          return res.status(500).json({ error: 'Error from Gemini API.' });
+        }
+        const responseText = parsedData?.candidates?.[0]?.content?.parts?.[0]?.text;
+        res.json({ fact: responseText });
       } catch (error) {
         res.status(500).json({ error: 'Error parsing Gemini response' });
       }

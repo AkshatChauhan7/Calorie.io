@@ -267,3 +267,53 @@
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
+.searchInputContainer {
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.searchResults li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.searchResults li:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}

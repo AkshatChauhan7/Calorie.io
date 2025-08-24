@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
-import { intakeAPI, profileAPI } from './services/api'; 
+import { intakeAPI, profileAPI, recipeAPI } from './services/api'; 
 import Dashboard from './pages/Dashboard';
 import AddIntake from './pages/AddIntake';
 import History from './pages/History';
@@ -11,6 +11,9 @@ import ProteinCalculator from './pages/ProteinCalculator';
 import BmiCalculator from './pages/BmiCalculator';
 import AskGemini from './pages/AskGemini';
 import Progress from './pages/Progress';
+import Recipes from './pages/Recipes';
+import AddRecipe from './pages/AddRecipe';
+import Trivia from './pages/Trivia'; // This line was missing
 import { 
   calculateTodaysCalories, 
   calculateCalorieGoal,
@@ -130,6 +133,44 @@ const App = () => {
     }
   };
   
+  const handleSaveRecipe = async (recipeData) => {
+    try {
+      await recipeAPI.add(recipeData);
+      // You can add a success message here
+    } catch (error) {
+      console.error("Failed to save recipe", error);
+    }
+  };
+
+  const handleLogRecipe = async (recipe) => {
+    try {
+      setLoading(true);
+      const intakePromises = recipe.ingredients.map(ingredient => {
+        const intakeData = {
+          foodItem: `${ingredient.foodItem} (from ${recipe.name})`,
+          quantity: ingredient.quantity,
+          calories: ingredient.calories,
+          protein: ingredient.protein,
+          carbs: ingredient.carbs,
+          fats: ingredient.fats,
+          category: 'Recipe',
+          date: new Date().toISOString()
+        };
+        return intakeAPI.add(intakeData);
+      });
+      
+      await Promise.all(intakePromises);
+      
+      const data = await intakeAPI.getAll();
+      setIntakeList(data);
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging recipe:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const todaysCalories = calculateTodaysCalories(intakeList);
 
   if (loading) {
@@ -172,6 +213,9 @@ const App = () => {
             <Route path="/bmi" element={<BmiCalculator />} />
             <Route path="/ask-gemini" element={<AskGemini calorieGoal={calorieGoal} />} />
             <Route path="/progress" element={<Progress intakeList={intakeList} userProfile={userProfile} theme={theme} />} />
+            <Route path="/recipes" element={<Recipes handleLogRecipe={handleLogRecipe} />} />
+            <Route path="/add-recipe" element={<AddRecipe intakeList={intakeList} handleSaveRecipe={handleSaveRecipe} />} />
+            <Route path="/trivia" element={<Trivia />} />
           </Routes>
         </main>
       </div>

@@ -3,6 +3,8 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') }
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const foodSearchRouter = require('./routes/foodSearchRoutes');
+const triviaRouter = require('./routes/triviaRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,11 +30,15 @@ const intakeRouter = require('./routes/intakeRoutes');
 const profileRouter = require('./routes/profileRoutes');
 const proteinIntakeRouter = require('./routes/proteinIntakeRoutes');
 const geminiRouter = require('./routes/geminiRoutes');
+const recipeRouter = require('./routes/recipeRoutes');
 
 app.use('/api/intakes', intakeRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/protein', proteinIntakeRouter);
 app.use('/api/gemini', geminiRouter);
+app.use('/api/recipes', recipeRouter);
+app.use('/api/food-search', foodSearchRouter);
+app.use('/api/trivia', triviaRouter);
 
 // 6. Start the Server
 app.listen(PORT, () => {

@@ -1,0 +1,117 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .formCard {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  
+  .header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+  
+  .header p {
+    color: var(--text-secondary);
+  }
+  
+  .formGroup {
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+  
+  .ingredientList {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+  }
+  
+  .ingredientItem {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .ingredientItem:hover {
+    background-color: var(--bg-tertiary);
+  }
+  
+  .ingredientItem.selected {
+    background-color: var(--accent-primary-light);
+    color: var(--accent-primary);
+    font-weight: 500;
+  }
+  
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-medium);
+    border-radius: 6px;
+    margin-right: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .ingredientItem.selected .checkbox {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    background-image: url('data:image/svg+xml,...'); /* Checkmark SVG */
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .submitButton, .cancelButton {
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  
+  .submitButton {
+    background-color: var(--accent-primary);
+    color: white;
+  }
+  
+  .cancelButton {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+  }
